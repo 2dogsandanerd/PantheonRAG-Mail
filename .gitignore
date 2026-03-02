@@ -1,0 +1,126 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+venv/
+.venv/
+NON_ROOT_VENV/
+
+# Databases & Data
+*.db
+*.sqlite3
+backend/data/
+!backend/data/.gitkeep
+chroma_data/
+**/chroma/chroma/
+*.log
+
+# Environment & Secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.secret
+*.token
+
+# Node / Frontend
+node_modules/
+frontend/build/
+frontend/dist/
+.npm
+yarn-error.log
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.benchmarks/
+
+# Cache
+.cache/
+**/huggingface/
+**/nltk_data/
+/tmp/docling_cache/
+
+# Temporaere Entwicklungsdateien (debug output, nicht fuer das Repo)
+backend/output*.txt
+backend/output_*.txt
+
+# SQLite Memory-Dateien (entstehen durch aiosqlite Bug)
+file::memory:
+backend/file::memory:
+**/file::memory:
+
+# Log-Dateien (explizit zusaetzlich zu *.log)
+backend/chroma.log
+
+# Backup-Dateien aus dem Editor oder manuellen Sicherungen
+*.backup_*
+*.bak
+*.py.bak
+*.py.backup
+*.jsx.bak
+*.js.bak
+~
+
+# Electron Build-Artefakte
+frontend/.webpack/
+
+# E2E Test-Daten (local only)
+e2e_data/
+
+# Interne KI-Agenten Dateien (nicht fuer GitHub)
+QWEN.md
+GEMINI.md
+
+# Planungsordner (interne Entwicklungsdoku)
+planung/020626/
+planung/190226_weiter/
+planung/branding/
+planung/kimi/
+planung/mail_modul_entkernung/
+planung/todo/
+planung/*.md
+!planung/manifest_v4.0.md
+!planung/manifest_pipeline_v4.0.md
+!planung/manifest_knowledge_v4.0.md
+!planung/manifest_quality_v4.0.md
+!planung/manifest_infrastructure_v4.0.md
+
+# Lokale Upload/Test Ordner (NICHT fuer GitHub)
+git_upload/
+testing/
+upload_ready/
+
+# Lokale Environment Files
+.env.modular
+.env.local
+.env.*.local
+
+# Interne Docs (nicht fuer GitHub)

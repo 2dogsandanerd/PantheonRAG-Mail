@@ -1,0 +1,125 @@
+version: '3.8'
+
+# E2E Test Environment for Mail Modul Fiat
+# This compose file sets up all services needed for E2E testing
+
+services:
+  # ==============================================
+  # TEST INFRASTRUCTURE
+  # ==============================================
+  
+  # GreenMail - Mock IMAP/SMTP Server for testing
+  greenmail:
+    image: greenmail/standalone:latest
+    container_name: pantheonrag_e2e_mail
+    ports:
+      - "3143:3143"  # IMAP
+      - "3025:3025"  # SMTP
+    environment:
+      - GREENMAIL_OPTS=-Dgreenmail.setup.test.all -Dgreenmail.hostname=0.0.0.0 -Dgreenmail.auth.disabled -Dgreenmail.verbose
+    networks:
+      - e2e_network
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "3025"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # ChromaDB - Vector Database for RAG
+  chromadb:
+    image: chromadb/chroma:latest
+    container_name: pantheonrag_e2e_chroma
+    ports:
+      - "38001:8000"
+    volumes:
+      - chroma_e2e_data:/chroma/chroma
+    environment:
+      - IS_PERSISTENT=TRUE
+      - CHROMA_SERVER_HOST=0.0.0.0
+      - CHROMA_SERVER_HTTP_PORT=8000
+    networks:
+      - e2e_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v2/heartbeat"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # Redis - For Celery and caching
+  redis:
+    image: redis:alpine
+    container_name: pantheonrag_e2e_redis
+    ports:
+      - "36380:6379"
+    volumes:
+      - redis_e2e_data:/data
+    networks:
+      - e2e_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+  
+  # Ollama - REMOVED FOR MOCK MODE
+  # ollama:
+  #   image: ollama/ollama:latest
+  # ... (service removed)
+
+  # ==============================================
+  # APPLICATION UNDER TEST
+  # ==============================================
+  
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: pantheonrag_e2e_backend
+    ports:
+      - "33801:33800"
+    environment:
+      - MAIL_EDITION_LEAN=true
+      - EDITION=team
+      - CHROMA_HOST=chromadb
+      - CHROMA_PORT=8000
+      - CHROMA_IN_MEMORY=True
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - DATABASE_URL=sqlite:///./data/e2e_test.db
+      - HF_HOME=/app/data/cache/huggingface
+      - NLTK_DATA=/app/data/cache/nltk
+      - TESTING=true
+      - GREENMAIL_IMAP_HOST=greenmail
+      - GREENMAIL_IMAP_PORT=3143
+      - GREENMAIL_SMTP_HOST=greenmail
+      - GREENMAIL_SMTP_PORT=3025
+      - LLM_PROVIDER=mock
+      - LLM_MODEL=mock-model
+      - EMBEDDING_PROVIDER=mock
+      - EMBEDDING_MODEL=mock-model
+      - OLLAMA_HOST=http://localhost:11434 # Unused in mock mode
+    volumes:
+      - ./e2e_data:/app/data
+      - ./backend/src:/app/src
+    depends_on:
+      - chromadb
+      - redis
+      - greenmail
+    networks:
+      - e2e_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:33800/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+networks:
+  e2e_network:
+    driver: bridge
+
+volumes:
+  chroma_e2e_data:
+  redis_e2e_data:
+  ollama_e2e_data:

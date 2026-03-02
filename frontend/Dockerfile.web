@@ -1,0 +1,45 @@
+# Frontend Web Dockerfile
+# Serves the React app as web version (not Electron)
+
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy source code
+COPY . .
+
+# Build the app for web
+# Note: We need to create a web-specific webpack config or use the existing one
+RUN npm run build || echo "Build may need adjustment for web"
+
+# Production stage with nginx
+FROM nginx:alpine
+
+# Copy built files
+COPY --from=builder /app/.webpack/renderer /usr/share/nginx/html
+
+# Or if build doesn't work, serve via node
+# Alternative: Use a simple static server
+
+# Create nginx config
+RUN echo 'server { \
+    listen 3000; \
+    location / { \
+        root /usr/share/nginx/html; \
+        index index.html; \
+        try_files $uri $uri/ /index.html; \
+    } \
+    location /api { \
+        proxy_pass http://backend:33800; \
+    } \
+}' > /etc/nginx/conf.d/default.conf
+
+EXPOSE 3000
+
+CMD ["nginx", "-g", "daemon off;"]

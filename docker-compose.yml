@@ -1,0 +1,130 @@
+version: '3.8'
+
+services:
+  # ==============================================
+  # FIAT EDITION: APPLICATION SERVICES (LEAN)
+  # ==============================================
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: mail_fiat_backend
+    ports:
+      - "33800:33800"
+    environment:
+      - MAIL_EDITION_LEAN=true
+      - EDITION=team
+      - CHROMA_HOST=chromadb
+      - CHROMA_PORT=8000
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - OLLAMA_HOST=http://ollama:11434
+      - DATABASE_URL=sqlite:///./data/app.db
+      - HF_HOME=/app/data/cache/huggingface
+      - NLTK_DATA=/app/data/cache/nltk
+    volumes:
+      - ./backend/src:/app/src
+      - ./.env:/app/.env
+      - ./backend/data:/app/data
+      - ./backend/data/uploads:/app/data/uploads
+      # Zentrale Caches für Mobile-Daten-Schonung
+      - ${HOME}/.cache/pip:/root/.cache/pip
+      - ${HOME}/.ollama:/root/.ollama
+      - ~/docker-caches/huggingface:/app/data/cache/huggingface
+      - ~/docker-caches/nltk:/app/data/cache/nltk
+      - ~/docker-caches/docling:/app/data/cache/docling
+    # network_mode: "host"
+    depends_on:
+      - ollama
+      - chromadb
+      - redis
+    networks:
+      - fiat_network
+
+  celery_worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: mail_fiat_worker
+    command: celery -A src.workers.celery_app worker --loglevel=info
+    environment:
+      - MAIL_EDITION_LEAN=true
+      - EDITION=team
+      - CHROMA_HOST=chromadb
+      - CHROMA_PORT=8000
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - OLLAMA_HOST=http://ollama:11434
+      - DATABASE_URL=sqlite:///./data/app.db
+      - HF_HOME=/app/data/cache/huggingface
+      - NLTK_DATA=/app/data/cache/nltk
+    volumes:
+      - ./backend/src:/app/src
+      - ./.env:/app/.env
+      - ./backend/data:/app/data
+      - ./backend/data/uploads:/app/data/uploads
+      # Zentrale Caches für Mobile-Daten-Schonung
+      - ${HOME}/.cache/pip:/root/.cache/pip
+      - ${HOME}/.ollama:/root/.ollama
+      - ~/docker-caches/huggingface:/app/data/cache/huggingface
+      - ~/docker-caches/nltk:/app/data/cache/nltk
+      - ~/docker-caches/docling:/app/data/cache/docling
+    # network_mode: "host"
+    depends_on:
+      - backend
+      - ollama
+      - redis
+      - chromadb
+    networks:
+      - fiat_network
+
+  # Ollama LLM Server (wie ClawRAG)
+  ollama:
+    image: ollama/ollama:latest
+    container_name: mail_fiat_ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ${HOME}/.ollama:/root/.ollama
+    networks:
+      - fiat_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "/bin/ollama", "list"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  chromadb:
+    image: chromadb/chroma:0.5.15
+    container_name: mail_fiat_chroma
+    ports:
+      - "38000:8000"
+    expose:
+      - "8000"
+    volumes:
+      - chroma_data:/chroma/chroma
+    environment:
+      - IS_PERSISTENT=TRUE
+    networks:
+      - fiat_network
+
+  redis:
+    image: redis:alpine
+    container_name: mail_fiat_redis
+    ports:
+      - "36379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - fiat_network
+
+networks:
+  fiat_network:
+    driver: bridge
+
+volumes:
+  chroma_data:
+  redis_data:

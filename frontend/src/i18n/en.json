@@ -1,0 +1,146 @@
+{
+  "tabs": {
+    "dashboard": "Dashboard",
+    "emailInbox": "Email Inbox",
+    "drafts": "Drafts",
+    "learning": "Learning",
+    "ragManagement": "RAG Management",
+    "statistics": "Statistics",
+    "settings": "Settings",
+    "documentation": "Documentation",
+    "dev": "Development"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "stats": {
+      "totalEmails": "Total Emails",
+      "draftsCreated": "Drafts Created",
+      "learningPairs": "Learning Pairs",
+      "accuracy": "Accuracy"
+    }
+  },
+  "inbox": {
+    "title": "Inbox",
+    "unreadEmails": "Unread Emails",
+    "noEmails": "No unread emails",
+    "loading": "Loading emails...",
+    "error": "Error loading emails",
+    "notConfigured": "Email provider not configured. Please configure in Settings."
+  },
+  "draft": {
+    "title": "Draft Response",
+    "noEmailSelected": "No email selected",
+    "selectEmail": "Select an email from the inbox to view and generate a draft response.",
+    "generateDraft": "Generate Draft",
+    "createDraft": "Create Draft",
+    "generating": "Generating draft...",
+    "from": "From",
+    "subject": "Subject",
+    "body": "Body",
+    "response": "Draft Response"
+  },
+  "learning": {
+    "title": "Learning System",
+    "pairs": "Learning Pairs",
+    "noPairs": "No learning pairs yet",
+    "matchSentEmails": "Match Sent Emails",
+    "status": {
+      "draftCreated": "Draft Created",
+      "pairCompleted": "Pair Completed"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "save": "Save Configuration",
+    "test": "Test Connections",
+    "testing": "Testing...",
+    "saved": "Configuration saved successfully",
+    "error": "Error saving configuration",
+    "tabs": {
+      "services": "Services",
+      "llm": "LLM",
+      "email": "Email",
+      "databases": "Databases"
+    },
+    "services": {
+      "runningOn": "Running on",
+      "ollamaHost": "Ollama Host",
+      "ollamaHostHelp": "URL of Ollama API endpoint",
+      "chromaHost": "ChromaDB Host",
+      "chromaHostHelp": "URL of ChromaDB API endpoint"
+    },
+    "llm": {
+      "provider": "LLM Provider",
+      "providerHelp": "Provider: ollama, openai, anthropic, gemini",
+      "model": "LLM Model",
+      "modelHelp": "Model name (e.g., llama3:latest, gpt-4, claude-3-opus)",
+      "embeddingProvider": "Embedding Provider",
+      "embeddingProviderHelp": "Provider for embeddings",
+      "embeddingModel": "Embedding Model",
+      "embeddingModelHelp": "Embedding model name"
+    },
+    "email": {
+      "title": "Email Provider Settings",
+      "provider": "Email Provider",
+      "providerHelp": "Select your email provider",
+      "providerImap": "IMAP (Gmail, Outlook, etc.)",
+      "providerGmail": "Gmail (OAuth2)",
+      "imapSettings": "IMAP Settings",
+      "emailAddress": "Email Address",
+      "emailAddressHelp": "Your email address",
+      "emailPassword": "Email Password / App Password",
+      "emailPasswordPlaceholder": "App Password (not your regular password!)",
+      "emailPasswordHelp": "For Gmail: Create App Password in Google Account settings",
+      "imapHost": "IMAP Host",
+      "imapHostHelp": "IMAP server address (Gmail: imap.gmail.com)",
+      "imapPort": "IMAP Port",
+      "imapPortHelp": "IMAP port (usually 993 for SSL)",
+      "smtpHost": "SMTP Host",
+      "smtpHostHelp": "SMTP server for sending (Gmail: smtp.gmail.com)",
+      "smtpPort": "SMTP Port",
+      "smtpPortHelp": "SMTP port (usually 587 for TLS)",
+      "gmailOauth": "Gmail OAuth2 Settings",
+      "gmailOauthInfo": "Gmail OAuth2 requires a credentials.json file in the backend directory. Please follow the setup instructions in the documentation.",
+      "gmailImapInfo": "For Gmail: Use App Password from https://myaccount.google.com/apppasswords",
+      "databaseUrl": "Database URL",
+      "databaseUrlHelp": "Database connection string"
+    },
+    "databases": {
+      "title": "Databases",
+      "learningDb": "Learning DB (lea_database_url)",
+      "learningDbHelp": "Connection string for the learning database",
+      "ragDb": "RAG DB",
+      "ragDbHelp": "Connection string for the RAG database"
+    },
+    "language": {
+      "title": "Language",
+      "select": "Select Language",
+      "english": "English",
+      "german": "Deutsch"
+    },
+    "testResults": {
+      "title": "Connection Test Results",
+      "success": "Success",
+      "failed": "Failed"
+    }
+  },
+  "documentation": {
+    "title": "Documentation",
+    "placeholder": "App documentation will be shown here.",
+    "fileTree": "Files",
+    "error": {
+      "loadTree": "Error loading documentation tree.",
+      "loadFile": "Error loading documentation file"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close"
+  }
+}

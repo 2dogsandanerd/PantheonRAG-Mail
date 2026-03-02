@@ -1,0 +1,23 @@
+Tax Treatment of Cryptocurrencies in International Business
+
+In Germany, gains from cryptocurrency transactions are subject to income tax 
+after a holding period of one year. This regulation falls under the Income 
+Tax Act (Einkommensteuergesetz).
+
+In anderen Ländern wie den USA gelten unterschiedliche Regelungen:
+- Short-term vs. long-term capital gains
+- Reporting requirements according to IRS guidelines
+- Different tax rates depending on holding period
+
+In Deutschland unterliegen Gewinne aus Kryptowährungen der privaten 
+Veräußerungsgeschäfte gemäß § 23 EStG. Es gilt eine Freigrenze von 
+600 Euro innerhalb eines Jahres.
+
+Die Abwicklung solcher Geschäfte in einem internationalen Kontext 
+erfordert besondere Beachtung der verschiedenen nationalen Regelungen 
+und der EU-Richtlinien.
+
+Conclusion: Companies dealing with cryptocurrencies in international 
+business must consider tax implications in each jurisdiction where 
+they operate.
+            

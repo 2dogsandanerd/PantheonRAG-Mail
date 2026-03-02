@@ -1,0 +1,32 @@
+Rechnung / Invoice Nr. R-2025-9999
+Rechnungsdatum: 15.11.2025
+Kundennummer: K-12345
+
+Leistungen gemäß Vertragsnummer V-2025-888:
+- Beratung zu Steuerreform 2025
+- Optimierung der Steuerstrategie
+- Vertretung bei Finanzamtsgesprächen
+
+Zusätzlich vereinbart:
+- Quartalsberichte ab 01.01.2026
+- Monatliche Steuerupdates
+- Rechtssicherheit in grenzüberschreitenden Fällen
+
+Summe: 4.500,00 € (netto)
+Umsatzsteuer: 765,00 € (19%)
+Gesamt: 5.265,00 €
+
+Zahlung innerhalb 14 Tage nach Erhalt
+
+Weitere Details:
+1. Die Leistungen wurden ordnungsgemäß erbracht
+2. Die Rechnung ist mit dem Vertrag vereinbar
+3. Sämtliche Anforderungen wurden erfüllt
+
+Anlagen:
+- Anlage1_Bericht.pdf
+- Anlage2_Berechnung.xlsx
+- Anlage3_Vertrag.docx
+
+Vielen Dank für Ihr Vertrauen.
+            

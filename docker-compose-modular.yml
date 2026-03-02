@@ -1,0 +1,168 @@
+version: '3.8'
+
+services:
+  # External RAG Module (Knowledge-Base-Self-Hosting-Kit)
+  rag_module:
+    build:
+      context: ./rag_modul/backend
+      dockerfile: Dockerfile
+    container_name: knowledge-base-module
+    ports:
+      - "8080:8080"
+    environment:
+      - CHROMA_HOST=rag_chromadb
+      - CHROMA_PORT=8000
+      - LLM_PROVIDER=ollama
+      - LLM_MODEL=llama3:latest
+      - EMBEDDING_PROVIDER=ollama
+      - EMBEDDING_MODEL=nomic-embed-text
+      - OLLAMA_HOST=http://host.docker.internal:11434
+      - DEBUG=true
+      - LOG_LEVEL=INFO
+    volumes:
+      - ./rag_modul/backend/src:/app/src
+      - ./rag_modul/data:/app/data
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      rag_chromadb:
+        condition: service_healthy
+    networks:
+      - rag_network
+
+  rag_chromadb:
+    image: chromadb/chroma:0.5.23
+    container_name: knowledge-kit-chromadb
+    expose:
+      - "8000"
+    volumes:
+      - rag_chroma_data:/chroma/chroma
+    environment:
+      - IS_PERSISTENT=TRUE
+      - ANONYMIZED_TELEMETRY=FALSE
+    networks:
+      - rag_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/heartbeat"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
+
+  # Email Assistant (with external RAG connection)
+  email_assistant:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: email-assistant
+    ports:
+      - "33800:33800"
+    environment:
+      # Development Mode (disable JWT auth for local dev)
+      - DEV_MODE=true
+
+      # Enable external RAG connection
+      - EXTERNAL_RAG_ENABLED=true
+      - EXTERNAL_RAG_URL=http://rag_module:8080
+      - EXTERNAL_RAG_TIMEOUT=60
+
+      # Original configuration
+      - MAIL_EDITION_LEAN=true
+      - EDITION=team
+      - CHROMA_HOST=rag_chromadb  # This will be ignored when external RAG is enabled
+      - CHROMA_PORT=8000
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PORT=6379
+      - OLLAMA_HOST=http://host.docker.internal:11434  # This will be ignored when external RAG is enabled
+      - DATABASE_URL=sqlite:///./data/app.db
+      - HF_HOME=/app/data/cache/huggingface
+      - NLTK_DATA=/app/data/cache/nltk
+
+      # LLM configuration (these will be used by the external RAG module)
+      - LLM_PROVIDER=ollama
+      - LLM_MODEL=llama3:latest
+      - EMBEDDING_PROVIDER=ollama
+      - EMBEDDING_MODEL=nomic-embed-text
+    volumes:
+      - ./backend/src:/app/src
+      - ./.env:/app/.env
+      - ./backend/data:/app/data
+      - ./backend/data/uploads:/app/data/uploads
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - rag_module
+      - redis
+    networks:
+      - rag_network
+      - email_network
+
+  celery_worker:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: email-assistant-worker
+    command: celery -A src.workers.celery_app worker --loglevel=info
+    environment:
+      # Development Mode (disable JWT auth for local dev)
+      - DEV_MODE=true
+
+      # Enable external RAG connection
+      - EXTERNAL_RAG_ENABLED=true
+      - EXTERNAL_RAG_URL=http://rag_module:8080
+      - EXTERNAL_RAG_TIMEOUT=60
+
+      # Original configuration
+      - MAIL_EDITION_LEAN=true
+      - EDITION=team
+      - CHROMA_HOST=rag_chromadb  # This will be ignored when external RAG is enabled
+      - CHROMA_PORT=8000
+      - REDIS_HOST=redis
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - OLLAMA_HOST=http://host.docker.internal:11434  # This will be ignored when external RAG is enabled
+      - DATABASE_URL=sqlite:///./data/app.db
+      - HF_HOME=/app/data/cache/huggingface
+      - NLTK_DATA=/app/data/cache/nltk
+
+      # LLM configuration (these will be used by the external RAG module)
+      - LLM_PROVIDER=ollama
+      - LLM_MODEL=llama3:latest
+      - EMBEDDING_PROVIDER=ollama
+      - EMBEDDING_MODEL=nomic-embed-text
+    volumes:
+      - ./backend/src:/app/src
+      - ./.env:/app/.env
+      - ./backend/data:/app/data
+      - ./backend/data/uploads:/app/data/uploads
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - email_assistant
+      - redis
+      - rag_module
+    networks:
+      - rag_network
+      - email_network
+
+  redis:
+    image: redis:alpine
+    container_name: email-assistant-redis
+    expose:
+      - "6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - email_network
+
+networks:
+  rag_network:
+    driver: bridge
+  email_network:
+    driver: bridge
+
+volumes:
+  rag_chroma_data:
+  redis_data:

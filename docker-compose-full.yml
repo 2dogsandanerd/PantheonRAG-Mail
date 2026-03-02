@@ -1,0 +1,126 @@
+version: '3.8'
+
+services:
+  # ==============================================
+  # BACKEND SERVICES
+  # ==============================================
+  
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: pantheonrag_backend
+    ports:
+      - "33800:33800"
+    environment:
+      - MAIL_EDITION_LEAN=true
+      - EDITION=team
+      - CHROMA_HOST=chromadb
+      - CHROMA_PORT=8000
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - OLLAMA_HOST=http://host.docker.internal:11434
+      - DATABASE_URL=sqlite:///./data/app.db
+      - HF_HOME=/app/data/cache/huggingface
+      - NLTK_DATA=/app/data/cache/nltk
+    volumes:
+      - ./backend/src:/app/src
+      - ./.env:/app/.env
+      - ./backend/data:/app/data
+      - ./backend/data/uploads:/app/data/uploads
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - chromadb
+      - redis
+    networks:
+      - fiat_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:33800/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  celery_worker:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: pantheonrag_worker
+    command: celery -A src.workers.celery_app worker --loglevel=info
+    environment:
+      - MAIL_EDITION_LEAN=true
+      - EDITION=team
+      - CHROMA_HOST=chromadb
+      - CHROMA_PORT=8000
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - OLLAMA_HOST=http://host.docker.internal:11434
+      - DATABASE_URL=sqlite:///./data/app.db
+      - HF_HOME=/app/data/cache/huggingface
+      - NLTK_DATA=/app/data/cache/nltk
+    volumes:
+      - ./backend/src:/app/src
+      - ./.env:/app/.env
+      - ./backend/data:/app/data
+      - ./backend/data/uploads:/app/data/uploads
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - backend
+      - redis
+      - chromadb
+    networks:
+      - fiat_network
+
+  # ==============================================
+  # FRONTEND (Web Version)
+  # ==============================================
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.web
+    container_name: pantheonrag_frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - BACKEND_URL=http://localhost:33800
+      - NODE_ENV=production
+    depends_on:
+      - backend
+    networks:
+      - fiat_network
+
+  # ==============================================
+  # INFRASTRUCTURE
+  # ==============================================
+  
+  chromadb:
+    image: chromadb/chroma:latest
+    container_name: pantheonrag_chroma
+    ports:
+      - "38000:8000"
+    volumes:
+      - chroma_data:/chroma/chroma
+    environment:
+      - IS_PERSISTENT=TRUE
+    networks:
+      - fiat_network
+
+  redis:
+    image: redis:alpine
+    container_name: pantheonrag_redis
+    ports:
+      - "36379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - fiat_network
+
+networks:
+  fiat_network:
+    driver: bridge
+
+volumes:
+  chroma_data:
+  redis_data:

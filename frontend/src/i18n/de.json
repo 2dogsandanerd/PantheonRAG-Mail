@@ -1,0 +1,146 @@
+{
+  "tabs": {
+    "dashboard": "Dashboard",
+    "emailInbox": "E-Mail Posteingang",
+    "drafts": "Drafts",
+    "learning": "Lernsystem",
+    "ragManagement": "RAG-Management",
+    "statistics": "Statistiken",
+    "settings": "Einstellungen",
+    "documentation": "Dokumentation",
+    "dev": "Entwicklung"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "stats": {
+      "totalEmails": "Gesamt E-Mails",
+      "draftsCreated": "Entwürfe erstellt",
+      "learningPairs": "Lernpaare",
+      "accuracy": "Genauigkeit"
+    }
+  },
+  "inbox": {
+    "title": "Posteingang",
+    "unreadEmails": "Ungelesene E-Mails",
+    "noEmails": "Keine ungelesenen E-Mails",
+    "loading": "E-Mails werden geladen...",
+    "error": "Fehler beim Laden der E-Mails",
+    "notConfigured": "E-Mail-Anbieter nicht konfiguriert. Bitte in den Einstellungen konfigurieren."
+  },
+  "draft": {
+    "title": "Antwort-Entwurf",
+    "noEmailSelected": "Keine E-Mail ausgewählt",
+    "selectEmail": "Wählen Sie eine E-Mail aus dem Posteingang aus, um einen Antwort-Entwurf zu erstellen.",
+    "generateDraft": "Entwurf generieren",
+    "createDraft": "Entwurf erstellen",
+    "generating": "Entwurf wird generiert...",
+    "from": "Von",
+    "subject": "Betreff",
+    "body": "Nachricht",
+    "response": "Antwort-Entwurf"
+  },
+  "learning": {
+    "title": "Lernsystem",
+    "pairs": "Lernpaare",
+    "noPairs": "Noch keine Lernpaare vorhanden",
+    "matchSentEmails": "Gesendete E-Mails zuordnen",
+    "status": {
+      "draftCreated": "Entwurf erstellt",
+      "pairCompleted": "Paar vollständig"
+    }
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "save": "Konfiguration speichern",
+    "test": "Verbindungen testen",
+    "testing": "Teste...",
+    "saved": "Konfiguration erfolgreich gespeichert",
+    "error": "Fehler beim Speichern der Konfiguration",
+    "tabs": {
+      "services": "Dienste",
+      "llm": "LLM",
+      "email": "E-Mail",
+      "databases": "Datenbanken"
+    },
+    "services": {
+      "runningOn": "Läuft auf",
+      "ollamaHost": "Ollama Host",
+      "ollamaHostHelp": "URL des Ollama API-Endpunkts",
+      "chromaHost": "ChromaDB Host",
+      "chromaHostHelp": "URL des ChromaDB API-Endpunkts"
+    },
+    "llm": {
+      "provider": "LLM-Anbieter",
+      "providerHelp": "Anbieter: ollama, openai, anthropic, gemini",
+      "model": "LLM-Modell",
+      "modelHelp": "Modellname (z.B. llama3:latest, gpt-4, claude-3-opus)",
+      "embeddingProvider": "Embedding-Anbieter",
+      "embeddingProviderHelp": "Anbieter für Embeddings",
+      "embeddingModel": "Embedding-Modell",
+      "embeddingModelHelp": "Embedding-Modellname"
+    },
+    "email": {
+      "title": "E-Mail-Anbieter Einstellungen",
+      "provider": "E-Mail-Anbieter",
+      "providerHelp": "Wählen Sie Ihren E-Mail-Anbieter",
+      "providerImap": "IMAP (Gmail, Outlook, etc.)",
+      "providerGmail": "Gmail (OAuth2)",
+      "imapSettings": "IMAP-Einstellungen",
+      "emailAddress": "E-Mail-Adresse",
+      "emailAddressHelp": "Ihre E-Mail-Adresse",
+      "emailPassword": "E-Mail-Passwort / App-Passwort",
+      "emailPasswordPlaceholder": "App-Passwort (nicht Ihr normales Passwort!)",
+      "emailPasswordHelp": "Für Gmail: App-Passwort in den Google-Kontoeinstellungen erstellen",
+      "imapHost": "IMAP-Host",
+      "imapHostHelp": "IMAP-Serveradresse (Gmail: imap.gmail.com)",
+      "imapPort": "IMAP-Port",
+      "imapPortHelp": "IMAP-Port (normalerweise 993 für SSL)",
+      "smtpHost": "SMTP-Host",
+      "smtpHostHelp": "SMTP-Server zum Senden (Gmail: smtp.gmail.com)",
+      "smtpPort": "SMTP-Port",
+      "smtpPortHelp": "SMTP-Port (normalerweise 587 für TLS)",
+      "gmailOauth": "Gmail OAuth2-Einstellungen",
+      "gmailOauthInfo": "Gmail OAuth2 erfordert eine credentials.json-Datei im Backend-Verzeichnis. Bitte folgen Sie den Setup-Anweisungen in der Dokumentation.",
+      "gmailImapInfo": "Für Gmail: App-Passwort verwenden von https://myaccount.google.com/apppasswords",
+      "databaseUrl": "Datenbank-URL",
+      "databaseUrlHelp": "Datenbank-Verbindungsstring"
+    },
+    "databases": {
+      "title": "Datenbanken",
+      "learningDb": "Learning-DB (lea_database_url)",
+      "learningDbHelp": "Verbindungsstring für die Learning-Datenbank",
+      "ragDb": "RAG-DB",
+      "ragDbHelp": "Verbindungsstring für die RAG-Datenbank"
+    },
+    "language": {
+      "title": "Sprache",
+      "select": "Sprache auswählen",
+      "english": "English",
+      "german": "Deutsch"
+    },
+    "testResults": {
+      "title": "Verbindungstest-Ergebnisse",
+      "success": "Erfolgreich",
+      "failed": "Fehlgeschlagen"
+    }
+  },
+  "documentation": {
+    "title": "Dokumentation",
+    "placeholder": "App-Dokumentation wird hier angezeigt.",
+    "fileTree": "Dateien",
+    "error": {
+      "loadTree": "Fehler beim Laden des Dokumentationsbaums.",
+      "loadFile": "Fehler beim Laden der Dokumentationsdatei"
+    }
+  },
+  "common": {
+    "loading": "Lädt...",
+    "error": "Fehler",
+    "success": "Erfolgreich",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "close": "Schließen"
+  }
+}

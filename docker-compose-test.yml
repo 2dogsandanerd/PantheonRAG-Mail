@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  # Mock Mail Server (GreenMail)
+  greenmail:
+    image: greenmail/standalone:latest
+    container_name: mail_modul_fiat_test_mail
+    ports:
+      - "3143:3143" # IMAP
+      - "3025:3025" # SMTP
+    environment:
+      # Enable IMAP and SMTP, disable authentication for easy testing
+      - GREENMAIL_OPTS=-Dgreenmail.setup.test.all -Dgreenmail.hostname=0.0.0.0 -Dgreenmail.auth.disabled -Dgreenmail.verbose
+    networks:
+      - test_network
+
+networks:
+  test_network:
+    driver: bridge

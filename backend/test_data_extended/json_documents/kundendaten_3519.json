@@ -1,0 +1,852 @@
+[
+  {
+    "id": "K-1000",
+    "name": "Firma_1",
+    "adresse": {
+      "strasse": "Strasse_1",
+      "nummer": 91,
+      "plz": "91770",
+      "ort": "Ort_1"
+    },
+    "kontakt": {
+      "email": "kontakt1@firma1.de",
+      "telefon": "+49-8665896595"
+    },
+    "umsatzsteuer": "7%",
+    "kundentyp": "VIP",
+    "gesamtumsatz": 61461.24751264992
+  },
+  {
+    "id": "K-1001",
+    "name": "Firma_2",
+    "adresse": {
+      "strasse": "Strasse_2",
+      "nummer": 93,
+      "plz": "71118",
+      "ort": "Ort_2"
+    },
+    "kontakt": {
+      "email": "kontakt2@firma2.de",
+      "telefon": "+49-4172629836"
+    },
+    "umsatzsteuer": "7%",
+    "kundentyp": "Premium",
+    "gesamtumsatz": 30815.51722617634
+  },
+  {
+    "id": "K-1002",
+    "name": "Firma_3",
+    "adresse": {
+      "strasse": "Strasse_3",
+      "nummer": 70,
+      "plz": "74049",
+      "ort": "Ort_3"
+    },
+    "kontakt": {
+      "email": "kontakt3@firma3.de",
+      "telefon": "+49-4950524276"
+    },
+    "umsatzsteuer": "0%",
+    "kundentyp": "Standard",
+    "gesamtumsatz": 37964.839852862235
+  },
+  {
+    "id": "K-1003",
+    "name": "Firma_4",
+    "adresse": {
+      "strasse": "Strasse_4",
+      "nummer": 72,
+      "plz": "67776",
+      "ort": "Ort_4"
+    },
+    "kontakt": {
+      "email": "kontakt4@firma4.de",
+      "telefon": "+49-8427773113"
+    },
+    "umsatzsteuer": "19%",
+    "kundentyp": "VIP",
+    "gesamtumsatz": 68364.6094317408
+  },
+  {
+    "id": "K-1004",
+    "name": "Firma_5",
+    "adresse": {
+      "strasse": "Strasse_5",
+      "nummer": 27,
+      "plz": "35098",
+      "ort": "Ort_5"
+    },
+    "kontakt": {
+      "email": "kontakt5@firma5.de",
+      "telefon": "+49-8022338697"
+    },
+    "umsatzsteuer": "0%",
+    "kundentyp": "Premium",
+    "gesamtumsatz": 25617.423594764376
+  },
+  {
+    "id": "K-1005",
+    "name": "Firma_6",
+    "adresse": {
+      "strasse": "Strasse_6",
+      "nummer": 90,
+      "plz": "42535",
+      "ort": "Ort_6"
+    },
+    "kontakt": {
+      "email": "kontakt6@firma6.de",
+      "telefon": "+49-2468318098"
+    },
+    "umsatzsteuer": "19%",
+    "kundentyp": "Premium",
+    "gesamtumsatz": 83948.74177250755
+  },
+  {
+    "id": "K-1006",
+    "name": "Firma_7",
+    "adresse": {
+      "strasse": "Strasse_7",
+      "nummer": 67,
+      "plz": "72129",
+      "ort": "Ort_7"
+    },
+    "kontakt": {
+      "email": "kontakt7@firma7.de",
+      "telefon": "+49-6025950737"
+    },
+    "umsatzsteuer": "19%",
+    "kundentyp": "VIP",
+    "gesamtumsatz": 32581.47813750479
+  },
+  {
+    "id": "K-1007",
+    "name": "Firma_8",
+    "adresse": {
+      "strasse": "Strasse_8",
+      "nummer": 76,
+      "plz": "85330",
+      "ort": "Ort_8"
+    },
+    "kontakt": {
+      "email": "kontakt8@firma8.de",
+      "telefon": "+49-2222091119"
+    },
+    "umsatzsteuer": "7%",
+    "kundentyp": "Premium",
+    "gesamtumsatz": 90496.06060607854
+  },
+  {
+    "id": "K-1008",
+    "name": "Firma_9",
+    "adresse": {
+      "strasse": "Strasse_9",
+      "nummer": 20,
+      "plz": "61061",
+      "ort": "Ort_9"
+    },
+    "kontakt": {
+      "email": "kontakt9@firma9.de",
+      "telefon": "+49-5340854826"
+    },
+    "umsatzsteuer": "7%",
+    "kundentyp": "VIP",
+    "gesamtumsatz": 67228.40158904038
+  },
+  {
+    "id": "K-1009",
+    "name": "Firma_10",
+    "adresse": {
+      "strasse": "Strasse_10",
+      "nummer": 48,
+      "plz": "43092",
+      "ort": "Ort_10"
+    },
+    "kontakt": {
+      "email": "kontakt10@firma10.de",
+      "telefon": "+49-5328331720"
+    },
+    "umsatzsteuer": "19%",
+    "kundentyp": "Premium",
+    "gesamtumsatz": 10811.385749527617
+  },
+  {
+    "id": "K-1010",
+    "name": "Firma_11",
+    "adresse": {
+      "strasse": "Strasse_11",
+      "nummer": 65,
+      "plz": "98914",
+      "ort": "Ort_11"
+    },
+    "kontakt": {
+      "email": "kontakt11@firma11.de",
+      "telefon": "+49-5730408334"
+    },
+    "umsatzsteuer": "7%",
+    "kundentyp": "Standard",
+    "gesamtumsatz": 69405.53774783002
+  },
+  {
+    "id": "K-1011",
+    "name": "Firma_12",
+    "adresse": {
+      "strasse": "Strasse_12",
+      "nummer": 72,
+      "plz": "22005",
+      "ort": "Ort_12"
+    },
+    "kontakt": {
+      "email": "kontakt12@firma12.de",
+      "telefon": "+49-9802214751"
+    },
+    "umsatzsteuer": "19%",
+    "kundentyp": "Premium",
+    "gesamtumsatz": 94951.99461253273
+  },
+  {
+    "id": "K-1012",
+    "name": "Firma_13",
+    "adresse": {
+      "strasse": "Strasse_13",
+      "nummer": 6,
+      "plz": "79622",
+      "ort": "Ort_13"
+    },
+    "kontakt": {
+      "email": "kontakt13@firma13.de",
+      "telefon": "+49-3779702015"
+    },
+    "umsatzsteuer": "19%",
+    "kundentyp": "VIP",
+    "gesamtumsatz": 34537.18349423472
+  },
+  {
+    "id": "K-1013",
+    "name": "Firma_14",
+    "adresse": {
+      "strasse": "Strasse_14",
+      "nummer": 89,
+      "plz": "51580",
+      "ort": "Ort_14"
+    },
+    "kontakt": {
+      "email": "kontakt14@firma14.de",
+      "telefon": "+49-2798157196"
+    },
+    "umsatzsteuer": "0%",
+    "kundentyp": "Standard",
+    "gesamtumsatz": 22103.32311411456
+  },
+  {
+    "id": "K-1014",
+    "name": "Firma_15",
+    "adresse": {
+      "strasse": "Strasse_15",
+      "nummer": 46,
+      "plz": "74239",
+      "ort": "Ort_15"
+    },
+    "kontakt": {
+      "email": "kontakt15@firma15.de",
+      "telefon": "+49-5564367184"
+    },
+    "umsatzsteuer": "7%",
+    "kundentyp": "Premium",
+    "gesamtumsatz": 92065.83582199745
+  },
+  {
+    "id": "K-1015",
+    "name": "Firma_16",
+    "adresse": {
+      "strasse": "Strasse_16",
+      "nummer": 16,
+      "plz": "36217",
+      "ort": "Ort_16"
+    },
+    "kontakt": {
+      "email": "kontakt16@firma16.de",
+      "telefon": "+49-2290439986"
+    },
+    "umsatzsteuer": "7%",
+    "kundentyp": "Premium",
+    "gesamtumsatz": 81269.82864259419
+  },
+  {
+    "id": "K-1016",
+    "name": "Firma_17",
+    "adresse": {
+      "strasse": "Strasse_17",
+      "nummer": 97,
+      "plz": "63219",
+      "ort": "Ort_17"
+    },
+    "kontakt": {
+      "email": "kontakt17@firma17.de",
+      "telefon": "+49-4254549943"
+    },
+    "umsatzsteuer": "7%",
+    "kundentyp": "Standard",
+    "gesamtumsatz": 56956.70113972981
+  },
+  {
+    "id": "K-1017",
+    "name": "Firma_18",
+    "adresse": {
+      "strasse": "Strasse_18",
+      "nummer": 72,
+      "plz": "58337",
+      "ort": "Ort_18"
+    },
+    "kontakt": {
+      "email": "kontakt18@firma18.de",
+      "telefon": "+49-1033087386"
+    },
+    "umsatzsteuer": "7%",
+    "kundentyp": "Premium",
+    "gesamtumsatz": 30422.108467551076
+  },
+  {
+    "id": "K-1018",
+    "name": "Firma_19",
+    "adresse": {
+      "strasse": "Strasse_19",
+      "nummer": 98,
+      "plz": "99593",
+      "ort": "Ort_19"
+    },
+    "kontakt": {
+      "email": "kontakt19@firma19.de",
+      "telefon": "+49-4347035972"
+    },
+    "umsatzsteuer": "0%",
+    "kundentyp": "Standard",
+    "gesamtumsatz": 67149.09441451324
+  },
+  {
+    "id": "K-1019",
+    "name": "Firma_20",
+    "adresse": {
+      "strasse": "Strasse_20",
+      "nummer": 14,
+      "plz": "32150",
+      "ort": "Ort_20"
+    },
+    "kontakt": {
+      "email": "kontakt20@firma20.de",
+      "telefon": "+49-5245551857"
+    },
+    "umsatzsteuer": "0%",
+    "kundentyp": "Standard",
+    "gesamtumsatz": 75922.97750830575
+  },
+  {
+    "id": "K-1020",
+    "name": "Firma_21",
+    "adresse": {
+      "strasse": "Strasse_21",
+      "nummer": 19,
+      "plz": "33771",
+      "ort": "Ort_21"
+    },
+    "kontakt": {
+      "email": "kontakt21@firma21.de",
+      "telefon": "+49-5808947342"
+    },
+    "umsatzsteuer": "0%",
+    "kundentyp": "Standard",
+    "gesamtumsatz": 71625.855455153
+  },
+  {
+    "id": "K-1021",
+    "name": "Firma_22",
+    "adresse": {
+      "strasse": "Strasse_22",
+      "nummer": 62,
+      "plz": "58475",
+      "ort": "Ort_22"
+    },
+    "kontakt": {
+      "email": "kontakt22@firma22.de",
+      "telefon": "+49-1830774851"
+    },
+    "umsatzsteuer": "0%",
+    "kundentyp": "Standard",
+    "gesamtumsatz": 37539.6050525295
+  },
+  {
+    "id": "K-1022",
+    "name": "Firma_23",
+    "adresse": {
+      "strasse": "Strasse_23",
+      "nummer": 43,
+      "plz": "67478",
+      "ort": "Ort_23"
+    },
+    "kontakt": {
+      "email": "kontakt23@firma23.de",
+      "telefon": "+49-5455787936"
+    },
+    "umsatzsteuer": "19%",
+    "kundentyp": "Premium",
+    "gesamtumsatz": 73396.35804747263
+  },
+  {
+    "id": "K-1023",
+    "name": "Firma_24",
+    "adresse": {
+      "strasse": "Strasse_24",
+      "nummer": 74,
+      "plz": "65354",
+      "ort": "Ort_24"
+    },
+    "kontakt": {
+      "email": "kontakt24@firma24.de",
+      "telefon": "+49-7755392590"
+    },
+    "umsatzsteuer": "7%",
+    "kundentyp": "VIP",
+    "gesamtumsatz": 48197.12566133817
+  },
+  {
+    "id": "K-1024",
+    "name": "Firma_25",
+    "adresse": {
+      "strasse": "Strasse_25",
+      "nummer": 48,
+      "plz": "42490",
+      "ort": "Ort_25"
+    },
+    "kontakt": {
+      "email": "kontakt25@firma25.de",
+      "telefon": "+49-9997466065"
+    },
+    "umsatzsteuer": "19%",
+    "kundentyp": "Standard",
+    "gesamtumsatz": 81125.3858577729
+  },
+  {
+    "id": "K-1025",
+    "name": "Firma_26",
+    "adresse": {
+      "strasse": "Strasse_26",
+      "nummer": 95,
+      "plz": "54747",
+      "ort": "Ort_26"
+    },
+    "kontakt": {
+      "email": "kontakt26@firma26.de",
+      "telefon": "+49-5615475276"
+    },
+    "umsatzsteuer": "7%",
+    "kundentyp": "VIP",
+    "gesamtumsatz": 76009.31310665682
+  },
+  {
+    "id": "K-1026",
+    "name": "Firma_27",
+    "adresse": {
+      "strasse": "Strasse_27",
+      "nummer": 98,
+      "plz": "77449",
+      "ort": "Ort_27"
+    },
+    "kontakt": {
+      "email": "kontakt27@firma27.de",
+      "telefon": "+49-7033150377"
+    },
+    "umsatzsteuer": "19%",
+    "kundentyp": "Standard",
+    "gesamtumsatz": 96174.18113421516
+  },
+  {
+    "id": "K-1027",
+    "name": "Firma_28",
+    "adresse": {
+      "strasse": "Strasse_28",
+      "nummer": 34,
+      "plz": "61965",
+      "ort": "Ort_28"
+    },
+    "kontakt": {
+      "email": "kontakt28@firma28.de",
+      "telefon": "+49-4672747478"
+    },
+    "umsatzsteuer": "0%",
+    "kundentyp": "Standard",
+    "gesamtumsatz": 94432.13473184888
+  },
+  {
+    "id": "K-1028",
+    "name": "Firma_29",
+    "adresse": {
+      "strasse": "Strasse_29",
+      "nummer": 98,
+      "plz": "81597",
+      "ort": "Ort_29"
+    },
+    "kontakt": {
+      "email": "kontakt29@firma29.de",
+      "telefon": "+49-3503522046"
+    },
+    "umsatzsteuer": "19%",
+    "kundentyp": "VIP",
+    "gesamtumsatz": 86890.42325550487
+  },
+  {
+    "id": "K-1029",
+    "name": "Firma_30",
+    "adresse": {
+      "strasse": "Strasse_30",
+      "nummer": 55,
+      "plz": "87064",
+      "ort": "Ort_30"
+    },
+    "kontakt": {
+      "email": "kontakt30@firma30.de",
+      "telefon": "+49-7722546742"
+    },
+    "umsatzsteuer": "7%",
+    "kundentyp": "Premium",
+    "gesamtumsatz": 90325.61038205691
+  },
+  {
+    "id": "K-1030",
+    "name": "Firma_31",
+    "adresse": {
+      "strasse": "Strasse_31",
+      "nummer": 34,
+      "plz": "18478",
+      "ort": "Ort_31"
+    },
+    "kontakt": {
+      "email": "kontakt31@firma31.de",
+      "telefon": "+49-5369224452"
+    },
+    "umsatzsteuer": "7%",
+    "kundentyp": "Premium",
+    "gesamtumsatz": 87711.05820724396
+  },
+  {
+    "id": "K-1031",
+    "name": "Firma_32",
+    "adresse": {
+      "strasse": "Strasse_32",
+      "nummer": 94,
+      "plz": "50517",
+      "ort": "Ort_32"
+    },
+    "kontakt": {
+      "email": "kontakt32@firma32.de",
+      "telefon": "+49-1067594235"
+    },
+    "umsatzsteuer": "0%",
+    "kundentyp": "VIP",
+    "gesamtumsatz": 17184.84075481615
+  },
+  {
+    "id": "K-1032",
+    "name": "Firma_33",
+    "adresse": {
+      "strasse": "Strasse_33",
+      "nummer": 7,
+      "plz": "39341",
+      "ort": "Ort_33"
+    },
+    "kontakt": {
+      "email": "kontakt33@firma33.de",
+      "telefon": "+49-9753622502"
+    },
+    "umsatzsteuer": "0%",
+    "kundentyp": "VIP",
+    "gesamtumsatz": 18553.090060276096
+  },
+  {
+    "id": "K-1033",
+    "name": "Firma_34",
+    "adresse": {
+      "strasse": "Strasse_34",
+      "nummer": 39,
+      "plz": "51293",
+      "ort": "Ort_34"
+    },
+    "kontakt": {
+      "email": "kontakt34@firma34.de",
+      "telefon": "+49-8724526106"
+    },
+    "umsatzsteuer": "7%",
+    "kundentyp": "Premium",
+    "gesamtumsatz": 61775.02086643149
+  },
+  {
+    "id": "K-1034",
+    "name": "Firma_35",
+    "adresse": {
+      "strasse": "Strasse_35",
+      "nummer": 50,
+      "plz": "65581",
+      "ort": "Ort_35"
+    },
+    "kontakt": {
+      "email": "kontakt35@firma35.de",
+      "telefon": "+49-5916482839"
+    },
+    "umsatzsteuer": "7%",
+    "kundentyp": "Standard",
+    "gesamtumsatz": 42255.32090062547
+  },
+  {
+    "id": "K-1035",
+    "name": "Firma_36",
+    "adresse": {
+      "strasse": "Strasse_36",
+      "nummer": 31,
+      "plz": "56116",
+      "ort": "Ort_36"
+    },
+    "kontakt": {
+      "email": "kontakt36@firma36.de",
+      "telefon": "+49-3558878625"
+    },
+    "umsatzsteuer": "0%",
+    "kundentyp": "VIP",
+    "gesamtumsatz": 17764.403400020623
+  },
+  {
+    "id": "K-1036",
+    "name": "Firma_37",
+    "adresse": {
+      "strasse": "Strasse_37",
+      "nummer": 75,
+      "plz": "76881",
+      "ort": "Ort_37"
+    },
+    "kontakt": {
+      "email": "kontakt37@firma37.de",
+      "telefon": "+49-5608859281"
+    },
+    "umsatzsteuer": "0%",
+    "kundentyp": "VIP",
+    "gesamtumsatz": 59695.894420923556
+  },
+  {
+    "id": "K-1037",
+    "name": "Firma_38",
+    "adresse": {
+      "strasse": "Strasse_38",
+      "nummer": 77,
+      "plz": "91465",
+      "ort": "Ort_38"
+    },
+    "kontakt": {
+      "email": "kontakt38@firma38.de",
+      "telefon": "+49-9375786018"
+    },
+    "umsatzsteuer": "0%",
+    "kundentyp": "Premium",
+    "gesamtumsatz": 27740.992585996588
+  },
+  {
+    "id": "K-1038",
+    "name": "Firma_39",
+    "adresse": {
+      "strasse": "Strasse_39",
+      "nummer": 51,
+      "plz": "92334",
+      "ort": "Ort_39"
+    },
+    "kontakt": {
+      "email": "kontakt39@firma39.de",
+      "telefon": "+49-6424913115"
+    },
+    "umsatzsteuer": "0%",
+    "kundentyp": "Premium",
+    "gesamtumsatz": 32366.401840954404
+  },
+  {
+    "id": "K-1039",
+    "name": "Firma_40",
+    "adresse": {
+      "strasse": "Strasse_40",
+      "nummer": 66,
+      "plz": "71434",
+      "ort": "Ort_40"
+    },
+    "kontakt": {
+      "email": "kontakt40@firma40.de",
+      "telefon": "+49-5839704757"
+    },
+    "umsatzsteuer": "0%",
+    "kundentyp": "Premium",
+    "gesamtumsatz": 98582.1014611388
+  },
+  {
+    "id": "K-1040",
+    "name": "Firma_41",
+    "adresse": {
+      "strasse": "Strasse_41",
+      "nummer": 11,
+      "plz": "13876",
+      "ort": "Ort_41"
+    },
+    "kontakt": {
+      "email": "kontakt41@firma41.de",
+      "telefon": "+49-7580523973"
+    },
+    "umsatzsteuer": "0%",
+    "kundentyp": "Premium",
+    "gesamtumsatz": 94995.21842211428
+  },
+  {
+    "id": "K-1041",
+    "name": "Firma_42",
+    "adresse": {
+      "strasse": "Strasse_42",
+      "nummer": 66,
+      "plz": "43674",
+      "ort": "Ort_42"
+    },
+    "kontakt": {
+      "email": "kontakt42@firma42.de",
+      "telefon": "+49-6803549686"
+    },
+    "umsatzsteuer": "0%",
+    "kundentyp": "Premium",
+    "gesamtumsatz": 29074.122578761588
+  },
+  {
+    "id": "K-1042",
+    "name": "Firma_43",
+    "adresse": {
+      "strasse": "Strasse_43",
+      "nummer": 76,
+      "plz": "87285",
+      "ort": "Ort_43"
+    },
+    "kontakt": {
+      "email": "kontakt43@firma43.de",
+      "telefon": "+49-4303785912"
+    },
+    "umsatzsteuer": "19%",
+    "kundentyp": "Standard",
+    "gesamtumsatz": 52971.50839583777
+  },
+  {
+    "id": "K-1043",
+    "name": "Firma_44",
+    "adresse": {
+      "strasse": "Strasse_44",
+      "nummer": 50,
+      "plz": "22912",
+      "ort": "Ort_44"
+    },
+    "kontakt": {
+      "email": "kontakt44@firma44.de",
+      "telefon": "+49-6061034652"
+    },
+    "umsatzsteuer": "7%",
+    "kundentyp": "VIP",
+    "gesamtumsatz": 40711.97377956247
+  },
+  {
+    "id": "K-1044",
+    "name": "Firma_45",
+    "adresse": {
+      "strasse": "Strasse_45",
+      "nummer": 18,
+      "plz": "67927",
+      "ort": "Ort_45"
+    },
+    "kontakt": {
+      "email": "kontakt45@firma45.de",
+      "telefon": "+49-4319921144"
+    },
+    "umsatzsteuer": "7%",
+    "kundentyp": "VIP",
+    "gesamtumsatz": 32177.07531306264
+  },
+  {
+    "id": "K-1045",
+    "name": "Firma_46",
+    "adresse": {
+      "strasse": "Strasse_46",
+      "nummer": 69,
+      "plz": "32945",
+      "ort": "Ort_46"
+    },
+    "kontakt": {
+      "email": "kontakt46@firma46.de",
+      "telefon": "+49-4884991095"
+    },
+    "umsatzsteuer": "7%",
+    "kundentyp": "VIP",
+    "gesamtumsatz": 49410.936861466704
+  },
+  {
+    "id": "K-1046",
+    "name": "Firma_47",
+    "adresse": {
+      "strasse": "Strasse_47",
+      "nummer": 92,
+      "plz": "78158",
+      "ort": "Ort_47"
+    },
+    "kontakt": {
+      "email": "kontakt47@firma47.de",
+      "telefon": "+49-7120485520"
+    },
+    "umsatzsteuer": "19%",
+    "kundentyp": "VIP",
+    "gesamtumsatz": 82656.37504412454
+  },
+  {
+    "id": "K-1047",
+    "name": "Firma_48",
+    "adresse": {
+      "strasse": "Strasse_48",
+      "nummer": 98,
+      "plz": "13515",
+      "ort": "Ort_48"
+    },
+    "kontakt": {
+      "email": "kontakt48@firma48.de",
+      "telefon": "+49-2509857696"
+    },
+    "umsatzsteuer": "7%",
+    "kundentyp": "Standard",
+    "gesamtumsatz": 60777.64530587605
+  },
+  {
+    "id": "K-1048",
+    "name": "Firma_49",
+    "adresse": {
+      "strasse": "Strasse_49",
+      "nummer": 41,
+      "plz": "97792",
+      "ort": "Ort_49"
+    },
+    "kontakt": {
+      "email": "kontakt49@firma49.de",
+      "telefon": "+49-2051913548"
+    },
+    "umsatzsteuer": "19%",
+    "kundentyp": "Premium",
+    "gesamtumsatz": 15981.11926878852
+  },
+  {
+    "id": "K-1049",
+    "name": "Firma_50",
+    "adresse": {
+      "strasse": "Strasse_50",
+      "nummer": 6,
+      "plz": "53522",
+      "ort": "Ort_50"
+    },
+    "kontakt": {
+      "email": "kontakt50@firma50.de",
+      "telefon": "+49-2242878398"
+    },
+    "umsatzsteuer": "19%",
+    "kundentyp": "Premium",
+    "gesamtumsatz": 54293.0061468734
+  }
+]

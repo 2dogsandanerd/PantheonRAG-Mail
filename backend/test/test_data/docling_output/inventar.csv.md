@@ -1,0 +1,5 @@
+| Produkt   |   Preis |   Lagerbestand |
+|-----------|---------|----------------|
+| Laptop    |    1200 |             50 |
+| Maus      |      25 |            200 |
+| Tastatur  |      75 |            150 |

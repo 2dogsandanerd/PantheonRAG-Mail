@@ -1,0 +1,446 @@
+[
+  {
+    "projekt_id": "P-100",
+    "name": "Projekt_1",
+    "beschreibung": "Beschreibung des Projekts 1 mit verschiedenen Details",
+    "kunde": "K-1032",
+    "startdatum": "2024-12-02",
+    "enddatum": "2026-07-17",
+    "status": "Verzögert",
+    "budget": 293975.5868095594,
+    "mitarbeiter": [
+      "M-47",
+      "M-20",
+      "M-50",
+      "M-37",
+      "M-27"
+    ],
+    "dokumente": [
+      "dokument_0.pdf",
+      "dokument_1.pdf",
+      "dokument_2.pdf",
+      "dokument_3.pdf",
+      "dokument_4.pdf",
+      "dokument_5.pdf"
+    ]
+  },
+  {
+    "projekt_id": "P-101",
+    "name": "Projekt_2",
+    "beschreibung": "Beschreibung des Projekts 2 mit verschiedenen Details",
+    "kunde": "K-1010",
+    "startdatum": "2025-06-07",
+    "enddatum": "2026-03-21",
+    "status": "Abgeschlossen",
+    "budget": 167560.94887134043,
+    "mitarbeiter": [
+      "M-49",
+      "M-4"
+    ],
+    "dokumente": [
+      "dokument_0.pdf",
+      "dokument_1.pdf",
+      "dokument_2.pdf",
+      "dokument_3.pdf",
+      "dokument_4.pdf",
+      "dokument_5.pdf",
+      "dokument_6.pdf",
+      "dokument_7.pdf",
+      "dokument_8.pdf"
+    ]
+  },
+  {
+    "projekt_id": "P-102",
+    "name": "Projekt_3",
+    "beschreibung": "Beschreibung des Projekts 3 mit verschiedenen Details",
+    "kunde": "K-1048",
+    "startdatum": "2025-10-29",
+    "enddatum": "2026-10-15",
+    "status": "In Planung",
+    "budget": 319570.4387278186,
+    "mitarbeiter": [
+      "M-39"
+    ],
+    "dokumente": [
+      "dokument_0.pdf",
+      "dokument_1.pdf",
+      "dokument_2.pdf",
+      "dokument_3.pdf"
+    ]
+  },
+  {
+    "projekt_id": "P-103",
+    "name": "Projekt_4",
+    "beschreibung": "Beschreibung des Projekts 4 mit verschiedenen Details",
+    "kunde": "K-1023",
+    "startdatum": "2025-03-06",
+    "enddatum": "2026-06-29",
+    "status": "Abgeschlossen",
+    "budget": 57946.41074771589,
+    "mitarbeiter": [
+      "M-28",
+      "M-31",
+      "M-39",
+      "M-1",
+      "M-9"
+    ],
+    "dokumente": [
+      "dokument_0.pdf",
+      "dokument_1.pdf",
+      "dokument_2.pdf",
+      "dokument_3.pdf"
+    ]
+  },
+  {
+    "projekt_id": "P-104",
+    "name": "Projekt_5",
+    "beschreibung": "Beschreibung des Projekts 5 mit verschiedenen Details",
+    "kunde": "K-1030",
+    "startdatum": "2024-11-23",
+    "enddatum": "2026-05-09",
+    "status": "In Planung",
+    "budget": 316241.20510285447,
+    "mitarbeiter": [
+      "M-45",
+      "M-7",
+      "M-34",
+      "M-19",
+      "M-11"
+    ],
+    "dokumente": [
+      "dokument_0.pdf",
+      "dokument_1.pdf",
+      "dokument_2.pdf",
+      "dokument_3.pdf"
+    ]
+  },
+  {
+    "projekt_id": "P-105",
+    "name": "Projekt_6",
+    "beschreibung": "Beschreibung des Projekts 6 mit verschiedenen Details",
+    "kunde": "K-1038",
+    "startdatum": "2025-06-03",
+    "enddatum": "2026-01-01",
+    "status": "In Bearbeitung",
+    "budget": 344002.51209334604,
+    "mitarbeiter": [
+      "M-33"
+    ],
+    "dokumente": [
+      "dokument_0.pdf",
+      "dokument_1.pdf",
+      "dokument_2.pdf",
+      "dokument_3.pdf",
+      "dokument_4.pdf",
+      "dokument_5.pdf",
+      "dokument_6.pdf"
+    ]
+  },
+  {
+    "projekt_id": "P-106",
+    "name": "Projekt_7",
+    "beschreibung": "Beschreibung des Projekts 7 mit verschiedenen Details",
+    "kunde": "K-1028",
+    "startdatum": "2024-12-16",
+    "enddatum": "2026-09-29",
+    "status": "In Bearbeitung",
+    "budget": 260932.5005184334,
+    "mitarbeiter": [
+      "M-13",
+      "M-34",
+      "M-26"
+    ],
+    "dokumente": [
+      "dokument_0.pdf",
+      "dokument_1.pdf",
+      "dokument_2.pdf",
+      "dokument_3.pdf"
+    ]
+  },
+  {
+    "projekt_id": "P-107",
+    "name": "Projekt_8",
+    "beschreibung": "Beschreibung des Projekts 8 mit verschiedenen Details",
+    "kunde": "K-1012",
+    "startdatum": "2025-01-25",
+    "enddatum": "2026-10-14",
+    "status": "Verzögert",
+    "budget": 360761.84419911436,
+    "mitarbeiter": [
+      "M-37",
+      "M-31"
+    ],
+    "dokumente": [
+      "dokument_0.pdf",
+      "dokument_1.pdf",
+      "dokument_2.pdf",
+      "dokument_3.pdf"
+    ]
+  },
+  {
+    "projekt_id": "P-108",
+    "name": "Projekt_9",
+    "beschreibung": "Beschreibung des Projekts 9 mit verschiedenen Details",
+    "kunde": "K-1003",
+    "startdatum": "2025-09-23",
+    "enddatum": "2026-05-11",
+    "status": "In Bearbeitung",
+    "budget": 163452.74087372771,
+    "mitarbeiter": [
+      "M-39",
+      "M-38",
+      "M-2",
+      "M-17",
+      "M-47"
+    ],
+    "dokumente": [
+      "dokument_0.pdf",
+      "dokument_1.pdf",
+      "dokument_2.pdf",
+      "dokument_3.pdf"
+    ]
+  },
+  {
+    "projekt_id": "P-109",
+    "name": "Projekt_10",
+    "beschreibung": "Beschreibung des Projekts 10 mit verschiedenen Details",
+    "kunde": "K-1019",
+    "startdatum": "2025-01-31",
+    "enddatum": "2026-10-12",
+    "status": "In Planung",
+    "budget": 463384.5818743301,
+    "mitarbeiter": [
+      "M-25",
+      "M-47"
+    ],
+    "dokumente": [
+      "dokument_0.pdf",
+      "dokument_1.pdf",
+      "dokument_2.pdf",
+      "dokument_3.pdf"
+    ]
+  },
+  {
+    "projekt_id": "P-110",
+    "name": "Projekt_11",
+    "beschreibung": "Beschreibung des Projekts 11 mit verschiedenen Details",
+    "kunde": "K-1006",
+    "startdatum": "2025-09-13",
+    "enddatum": "2026-05-09",
+    "status": "In Planung",
+    "budget": 67651.48304373244,
+    "mitarbeiter": [
+      "M-23",
+      "M-40",
+      "M-24",
+      "M-46",
+      "M-2"
+    ],
+    "dokumente": [
+      "dokument_0.pdf",
+      "dokument_1.pdf",
+      "dokument_2.pdf"
+    ]
+  },
+  {
+    "projekt_id": "P-111",
+    "name": "Projekt_12",
+    "beschreibung": "Beschreibung des Projekts 12 mit verschiedenen Details",
+    "kunde": "K-1029",
+    "startdatum": "2025-06-27",
+    "enddatum": "2026-04-24",
+    "status": "Abgeschlossen",
+    "budget": 456987.95721203595,
+    "mitarbeiter": [
+      "M-31"
+    ],
+    "dokumente": [
+      "dokument_0.pdf",
+      "dokument_1.pdf",
+      "dokument_2.pdf",
+      "dokument_3.pdf",
+      "dokument_4.pdf",
+      "dokument_5.pdf",
+      "dokument_6.pdf",
+      "dokument_7.pdf",
+      "dokument_8.pdf"
+    ]
+  },
+  {
+    "projekt_id": "P-112",
+    "name": "Projekt_13",
+    "beschreibung": "Beschreibung des Projekts 13 mit verschiedenen Details",
+    "kunde": "K-1012",
+    "startdatum": "2024-12-28",
+    "enddatum": "2026-07-25",
+    "status": "Abgeschlossen",
+    "budget": 289252.9996281372,
+    "mitarbeiter": [
+      "M-25"
+    ],
+    "dokumente": [
+      "dokument_0.pdf",
+      "dokument_1.pdf",
+      "dokument_2.pdf",
+      "dokument_3.pdf",
+      "dokument_4.pdf"
+    ]
+  },
+  {
+    "projekt_id": "P-113",
+    "name": "Projekt_14",
+    "beschreibung": "Beschreibung des Projekts 14 mit verschiedenen Details",
+    "kunde": "K-1004",
+    "startdatum": "2025-09-15",
+    "enddatum": "2026-09-25",
+    "status": "Abgeschlossen",
+    "budget": 392045.9520801476,
+    "mitarbeiter": [
+      "M-35",
+      "M-11",
+      "M-28",
+      "M-27",
+      "M-25"
+    ],
+    "dokumente": [
+      "dokument_0.pdf",
+      "dokument_1.pdf",
+      "dokument_2.pdf",
+      "dokument_3.pdf",
+      "dokument_4.pdf",
+      "dokument_5.pdf",
+      "dokument_6.pdf",
+      "dokument_7.pdf",
+      "dokument_8.pdf",
+      "dokument_9.pdf"
+    ]
+  },
+  {
+    "projekt_id": "P-114",
+    "name": "Projekt_15",
+    "beschreibung": "Beschreibung des Projekts 15 mit verschiedenen Details",
+    "kunde": "K-1037",
+    "startdatum": "2025-07-26",
+    "enddatum": "2026-05-22",
+    "status": "Abgeschlossen",
+    "budget": 337592.25916401285,
+    "mitarbeiter": [
+      "M-41",
+      "M-8",
+      "M-13",
+      "M-31"
+    ],
+    "dokumente": [
+      "dokument_0.pdf",
+      "dokument_1.pdf",
+      "dokument_2.pdf",
+      "dokument_3.pdf",
+      "dokument_4.pdf",
+      "dokument_5.pdf"
+    ]
+  },
+  {
+    "projekt_id": "P-115",
+    "name": "Projekt_16",
+    "beschreibung": "Beschreibung des Projekts 16 mit verschiedenen Details",
+    "kunde": "K-1020",
+    "startdatum": "2024-12-08",
+    "enddatum": "2026-04-15",
+    "status": "Abgeschlossen",
+    "budget": 267790.5548730906,
+    "mitarbeiter": [
+      "M-22"
+    ],
+    "dokumente": [
+      "dokument_0.pdf",
+      "dokument_1.pdf",
+      "dokument_2.pdf"
+    ]
+  },
+  {
+    "projekt_id": "P-116",
+    "name": "Projekt_17",
+    "beschreibung": "Beschreibung des Projekts 17 mit verschiedenen Details",
+    "kunde": "K-1046",
+    "startdatum": "2024-12-23",
+    "enddatum": "2026-03-24",
+    "status": "In Planung",
+    "budget": 51591.59759855982,
+    "mitarbeiter": [
+      "M-49"
+    ],
+    "dokumente": [
+      "dokument_0.pdf",
+      "dokument_1.pdf",
+      "dokument_2.pdf",
+      "dokument_3.pdf",
+      "dokument_4.pdf",
+      "dokument_5.pdf",
+      "dokument_6.pdf",
+      "dokument_7.pdf"
+    ]
+  },
+  {
+    "projekt_id": "P-117",
+    "name": "Projekt_18",
+    "beschreibung": "Beschreibung des Projekts 18 mit verschiedenen Details",
+    "kunde": "K-1011",
+    "startdatum": "2025-05-15",
+    "enddatum": "2026-04-28",
+    "status": "In Bearbeitung",
+    "budget": 484516.7569186247,
+    "mitarbeiter": [
+      "M-45"
+    ],
+    "dokumente": [
+      "dokument_0.pdf",
+      "dokument_1.pdf",
+      "dokument_2.pdf",
+      "dokument_3.pdf",
+      "dokument_4.pdf"
+    ]
+  },
+  {
+    "projekt_id": "P-118",
+    "name": "Projekt_19",
+    "beschreibung": "Beschreibung des Projekts 19 mit verschiedenen Details",
+    "kunde": "K-1007",
+    "startdatum": "2025-01-14",
+    "enddatum": "2026-08-06",
+    "status": "In Planung",
+    "budget": 426847.88101876964,
+    "mitarbeiter": [
+      "M-18",
+      "M-39",
+      "M-23",
+      "M-21"
+    ],
+    "dokumente": [
+      "dokument_0.pdf",
+      "dokument_1.pdf",
+      "dokument_2.pdf",
+      "dokument_3.pdf",
+      "dokument_4.pdf",
+      "dokument_5.pdf",
+      "dokument_6.pdf"
+    ]
+  },
+  {
+    "projekt_id": "P-119",
+    "name": "Projekt_20",
+    "beschreibung": "Beschreibung des Projekts 20 mit verschiedenen Details",
+    "kunde": "K-1011",
+    "startdatum": "2025-01-27",
+    "enddatum": "2026-02-26",
+    "status": "In Planung",
+    "budget": 499529.36143373075,
+    "mitarbeiter": [
+      "M-19"
+    ],
+    "dokumente": [
+      "dokument_0.pdf",
+      "dokument_1.pdf",
+      "dokument_2.pdf"
+    ]
+  }
+]
