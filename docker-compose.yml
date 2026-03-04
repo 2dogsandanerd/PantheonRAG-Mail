@@ -23,6 +23,10 @@ services:
       - DATABASE_URL=sqlite:///./data/app.db
       - HF_HOME=/app/data/cache/huggingface
       - NLTK_DATA=/app/data/cache/nltk
+      - DISABLE_AUTH=true
+      - DEV_USER=dev
+      - DEV_PASSWORD=dev123
+      - DEV_EMAIL=dev@localhost
     volumes:
       - ./backend/src:/app/src
       - ./.env:/app/.env

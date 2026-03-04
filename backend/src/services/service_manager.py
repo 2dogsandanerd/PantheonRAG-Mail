@@ -304,7 +304,7 @@ class ServiceManager:
             path = "/api/tags"
         elif service_name == "chroma":
             host_url = service_config["url"] if service_config else config.get("CHROMA_HOST", "http://localhost:8000")
-            path = "/api/v2/heartbeat"
+            path = "/api/v1/heartbeat"
         else:
             return {"success": False, "message": f"Unknown service: {service_name}"}
 

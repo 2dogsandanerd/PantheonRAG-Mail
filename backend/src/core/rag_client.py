@@ -36,8 +36,8 @@ class RAGClient:
         
         self.chroma_manager.configure(
             host=config.get("CHROMA_HOST", "127.0.0.1"),
-            port=config.get("CHROMA_PORT", 33801),
-            in_memory=True # HARDCODED FOR DEBUGGING
+            port=int(config.get("CHROMA_PORT", 8000)),
+            in_memory=in_memory
         )
 
         self.embedding_manager = EmbeddingManager(config_override=config)

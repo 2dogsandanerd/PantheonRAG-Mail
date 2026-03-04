@@ -54,9 +54,33 @@ def decode_token(token: str) -> dict:
         return None
 
 
+DISABLE_AUTH = os.getenv("DISABLE_AUTH", "false").lower() == "true"
+
+
+def is_auth_disabled() -> bool:
+    return os.getenv("DISABLE_AUTH", "false").lower() == "true"
+
+
 async def get_current_user(
-    token: str = Depends(oauth2_scheme), db: AsyncSession = Depends(get_db)
+    token: str = None, db: AsyncSession = Depends(get_db)
 ) -> User:
+    if is_auth_disabled():
+        result = await db.execute(select(User).limit(1))
+        user = result.scalar_one_or_none()
+        if user:
+            return user
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="DISABLE_AUTH=true but no user in DB",
+        )
+
+    if not token:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Could not validate credentials",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -66,7 +90,10 @@ async def get_current_user(
     payload = decode_token(token)
     if payload is None:
         import logging
-        logging.getLogger(__name__).error(f"decode_token returned None for token {token[:10]}...")
+
+        logging.getLogger(__name__).error(
+            f"decode_token returned None for token {token[:10]}..."
+        )
         raise credentials_exception
 
     user_id_str = payload.get("sub")
@@ -82,6 +109,7 @@ async def get_current_user(
 
     if user is None:
         import logging
+
         logging.getLogger(__name__).error(f"User with ID {user_id} not found in DB")
         raise credentials_exception
 

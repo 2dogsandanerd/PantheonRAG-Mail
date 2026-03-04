@@ -98,7 +98,11 @@ services:
       - LLM_MODEL=mock-model
       - EMBEDDING_PROVIDER=mock
       - EMBEDDING_MODEL=mock-model
-      - OLLAMA_HOST=http://localhost:11434 # Unused in mock mode
+      - OLLAMA_HOST=http://localhost:11434
+      - DISABLE_AUTH=true
+      - DEV_USER=dev
+      - DEV_PASSWORD=dev123
+      - DEV_EMAIL=dev@localhost
     volumes:
       - ./e2e_data:/app/data
       - ./backend/src:/app/src

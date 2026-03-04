@@ -1,7 +1,14 @@
 from src.api.v1.deps import CurrentUser
-from src.core.auth import get_current_active_user
+from src.core.auth import get_current_active_user, is_auth_disabled, decode_token
 from src.core.exceptions import ServiceUnavailableError, ValidationError
-from fastapi import Depends, APIRouter, HTTPException, Body, WebSocket, WebSocketDisconnect
+from fastapi import (
+    Depends,
+    APIRouter,
+    HTTPException,
+    Body,
+    WebSocket,
+    WebSocketDisconnect,
+)
 from typing import Dict, Any
 from datetime import datetime
 import asyncio
@@ -11,14 +18,12 @@ from src.services.service_manager import service_manager
 from src.services.config_service import config_service
 from src.services.health_monitor import get_health_monitor
 from src.core.config import get_websocket_config
-from src.core.auth import decode_token
 from src.database.database import get_db
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from src.database.models import User
 
 router = APIRouter()
-
 
 
 @router.get("/status")
@@ -40,6 +45,7 @@ async def get_ollama_models(current_user: CurrentUser):
         ollama_host = config.get("OLLAMA_HOST", "http://localhost:11434")
 
         import httpx
+
         async with httpx.AsyncClient(timeout=10.0) as client:
             response = await client.get(f"{ollama_host}/api/tags")
             if response.status_code == 200:
@@ -63,13 +69,20 @@ async def websocket_status_stream(websocket: WebSocket, token: str = None):
     """
     # WebSockets können keine HTTP Bearer Headers nutzen -> Token via Query-Param
     if not token:
-        await websocket.close(code=1008, reason="Missing authentication token")
-        return
+        if is_auth_disabled():
+            pass  # Auth disabled, allow connection
+        else:
+            await websocket.close(code=1008, reason="Missing authentication token")
+            return
 
-    payload = decode_token(token)
-    if not payload:
-        await websocket.close(code=1008, reason="Invalid or expired token")
-        return
+    if token:
+        payload = decode_token(token)
+        if not payload:
+            if is_auth_disabled():
+                pass  # Auth disabled, allow connection
+            else:
+                await websocket.close(code=1008, reason="Invalid or expired token")
+                return
 
     ws_config = get_websocket_config()
     monitor = get_health_monitor()
@@ -94,7 +107,9 @@ async def websocket_status_stream(websocket: WebSocket, token: str = None):
             try:
                 _ = queue.get_nowait()
                 queue.put_nowait(event)
-                logger.warning(f"WS backpressure: dropped oldest event for {websocket.client}")
+                logger.warning(
+                    f"WS backpressure: dropped oldest event for {websocket.client}"
+                )
             except Exception as e:
                 logger.warning(f"WS event dropped due to backpressure: {e}")
 
@@ -106,11 +121,13 @@ async def websocket_status_stream(websocket: WebSocket, token: str = None):
         # Send initial status
         config = config_service.load_configuration()
         current_status = await service_manager.get_status(config)
-        await websocket.send_json({
-            "type": "initial_status",
-            "data": current_status,
-            "timestamp": datetime.now().isoformat()
-        })
+        await websocket.send_json(
+            {
+                "type": "initial_status",
+                "data": current_status,
+                "timestamp": datetime.now().isoformat(),
+            }
+        )
 
         # Listen for updates with graceful disconnection handling
         while True:
@@ -122,10 +139,10 @@ async def websocket_status_stream(websocket: WebSocket, token: str = None):
                 done, pending = await asyncio.wait(
                     [
                         asyncio.create_task(queue.get()),
-                        asyncio.create_task(websocket.receive_text())
+                        asyncio.create_task(websocket.receive_text()),
                     ],
                     return_when=asyncio.FIRST_COMPLETED,
-                    timeout=timeout
+                    timeout=timeout,
                 )
 
                 # Check for idle timeout
@@ -133,7 +150,9 @@ async def websocket_status_stream(websocket: WebSocket, token: str = None):
                     # Timeout occurred - no events or client messages
                     elapsed = (datetime.now() - last_activity).total_seconds()
                     if timeout and elapsed >= timeout:
-                        logger.info(f"WS idle timeout ({timeout}s) for {websocket.client}")
+                        logger.info(
+                            f"WS idle timeout ({timeout}s) for {websocket.client}"
+                        )
                         await websocket.close(code=1000, reason="Idle timeout")
                         break
                     # Cancel pending and continue
@@ -150,11 +169,13 @@ async def websocket_status_stream(websocket: WebSocket, token: str = None):
 
                     # If it's from queue.get(), it's a status update event (dict)
                     if isinstance(result, dict):
-                        await websocket.send_json({
-                            "type": "status_change",
-                            "data": result,
-                            "timestamp": datetime.now().isoformat()
-                        })
+                        await websocket.send_json(
+                            {
+                                "type": "status_change",
+                                "data": result,
+                                "timestamp": datetime.now().isoformat(),
+                            }
+                        )
                     else:
                         # Message from client (keepalive or control message)
                         try:
@@ -186,6 +207,8 @@ async def websocket_status_stream(websocket: WebSocket, token: str = None):
         try:
             # Always unsubscribe from monitor to prevent memory leaks
             monitor.unsubscribe(on_status_event)
-            logger.info(f"WebSocket client unsubscribed (subscribers: {len(monitor._subscribers)})")
+            logger.info(
+                f"WebSocket client unsubscribed (subscribers: {len(monitor._subscribers)})"
+            )
         except Exception as e:
             logger.error(f"Error unsubscribing WebSocket client: {e}")

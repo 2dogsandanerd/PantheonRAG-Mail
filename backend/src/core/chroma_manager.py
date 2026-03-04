@@ -261,7 +261,7 @@ class ChromaManager:
             if self._connection_pool is None:
                 self._connection_pool = httpx.AsyncClient(timeout=10.0)
 
-            url = f"http://{self._host}:{self._port}/api/v2/heartbeat"
+            url = f"http://{self._host}:{self._port}/api/v1/heartbeat"
             response = await self._connection_pool.get(url)
 
             if response.status_code == 200:

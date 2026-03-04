@@ -6,6 +6,8 @@ from src.api.v1.dependencies import get_statistics_service
 from src.services.statistics_service import StatisticsService
 from src.api.v1.deps import CurrentUser
 from src.core.rate_limiter import limiter, RATE_LIMITS
+from src.core.auth import get_current_active_user
+from src.database.models import User
 
 router = APIRouter()
 
@@ -121,7 +123,7 @@ async def export_statistics_csv(
         return {
             "success": True,
             "data": csv_data,
-            "filename": f"statistics_export_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+            "filename": f"statistics_export_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
         }
     except Exception as e:
         raise ServiceUnavailableError("statistics", str(e))
@@ -138,7 +140,7 @@ async def export_statistics_json(
         return {
             "success": True,
             "data": json_data,
-            "filename": f"statistics_export_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+            "filename": f"statistics_export_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json",
         }
     except Exception as e:
         raise ServiceUnavailableError("statistics", str(e))

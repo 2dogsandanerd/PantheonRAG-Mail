@@ -29,8 +29,8 @@ const ModelSelector = () => {
 
                 // 2. Fetch current config
                 const configResp = await axios.get('http://localhost:33800/api/v1/config/config');
-                if (configResp.data && configResp.data.llm && configResp.data.llm.model_name) {
-                    setCurrentModel(configResp.data.llm.model_name);
+                if (configResp.data && configResp.data.LLM_MODEL) {
+                    setCurrentModel(configResp.data.LLM_MODEL);
                 }
             } catch (err) {
                 console.error("Failed to fetch data", err);
@@ -50,8 +50,8 @@ const ModelSelector = () => {
         setSaving(true);
         setMessage(null);
         try {
-            await axios.post('http://localhost:33800/api/v1/config/model', {
-                model_name: currentModel
+            await axios.post('http://localhost:33800/api/v1/config/config', {
+                LLM_MODEL: currentModel
             });
             setMessage({ type: 'success', text: 'Model configuration saved successfully!' });
         } catch (err) {

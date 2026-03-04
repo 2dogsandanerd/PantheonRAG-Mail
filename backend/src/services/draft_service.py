@@ -3,11 +3,12 @@ from pathlib import Path
 from src.core.llm_singleton import get_llm
 from src.services.learning_manager import LearningManager
 from src.services.conversation_manager import ConversationManager
-from src.core.services.query_service import QueryService # Import QueryService
+from src.core.services.query_service import QueryService  # Import QueryService
 from src.services.external_rag_connector import ExternalRAGConnector
 from loguru import logger
 from typing import Optional, Dict, Any, List, Union
 from src.core.feature_limits import Edition
+
 
 class DraftService:
     """
@@ -18,14 +19,14 @@ class DraftService:
     def __init__(
         self,
         rag_client: Union["RAGClient", ExternalRAGConnector],
-        query_service: Optional[QueryService] = None, # Add QueryService
+        query_service: Optional[QueryService] = None,  # Add QueryService
         learning_manager: LearningManager = None,
         conversation_manager: Optional[ConversationManager] = None,
         config_override: dict = None,
-        edition: Edition = Edition.DEVELOPER
+        edition: Edition = Edition.DEVELOPER,
     ):
         self.rag_client = rag_client
-        self.query_service = query_service # Store QueryService
+        self.query_service = query_service  # Store QueryService
         self.learning_manager = learning_manager
         self.conversation_manager = conversation_manager
         self.config = config_override or {}
@@ -37,18 +38,22 @@ class DraftService:
         try:
             # Correctly locate the file relative to this file's location
             domains_path = Path(__file__).parent.parent / "core" / "rag_domains.json"
-            with open(domains_path, 'r', encoding='utf-8') as f:
+            with open(domains_path, "r", encoding="utf-8") as f:
                 data = json.load(f)
                 logger.info(f"Successfully loaded RAG domains from {domains_path}")
                 return data.get("domains", {})
         except FileNotFoundError:
-            logger.warning("rag_domains.json not found. Domain-based routing will be disabled.")
+            logger.warning(
+                "rag_domains.json not found. Domain-based routing will be disabled."
+            )
             return {}
         except json.JSONDecodeError:
             logger.error("Failed to decode rag_domains.json. Check for syntax errors.")
             return {}
         except Exception as e:
-            logger.error(f"An unexpected error occurred while loading rag_domains.json: {e}")
+            logger.error(
+                f"An unexpected error occurred while loading rag_domains.json: {e}"
+            )
             return {}
 
     async def generate_draft(
@@ -56,7 +61,7 @@ class DraftService:
         email_data: dict,
         user_id: int,
         use_rag: bool = True,
-        domain: Optional[str] = None
+        domain: Optional[str] = None,
     ) -> dict:
         """
         Generate draft response using RAG + LLM.
@@ -89,21 +94,29 @@ class DraftService:
                 query = f"{email_data.get('subject', '')} {email_data.get('body', '')}"
 
                 try:
-                    logger.debug(f"DraftService: rag_client type: {type(self.rag_client)}")
+                    logger.debug(
+                        f"DraftService: rag_client type: {type(self.rag_client)}"
+                    )
                     # Determine collections to query (Domain-based and Fallback Logic)
                     # Handle both local RAGClient and external connector
-                    if hasattr(self.rag_client, 'list_collections'):
+                    if hasattr(self.rag_client, "list_collections"):
                         logger.debug("DraftService: calling list_collections")
                         response = await self.rag_client.list_collections()
-                        logger.debug(f"DraftService: list_collections response type: {type(response)}")
-                        
+                        logger.debug(
+                            f"DraftService: list_collections response type: {type(response)}"
+                        )
+
                         if response is None:
-                            logger.error("DraftService: list_collections returned None!")
+                            logger.error(
+                                "DraftService: list_collections returned None!"
+                            )
                             all_available_collections = []
-                        elif hasattr(response, 'is_success'):
+                        elif hasattr(response, "is_success"):
                             # Local RAGClient response (RAGResponse)
                             if not response.is_success:
-                                logger.error(f"Failed to list collections: {response.error}")
+                                logger.error(
+                                    f"Failed to list collections: {response.error}"
+                                )
                                 all_available_collections = []
                             else:
                                 all_available_collections = response.data
@@ -111,87 +124,139 @@ class DraftService:
                             # External RAG connector response (dict)
                             logger.debug("DraftService: treating response as dict")
                             if not response.get("success", False):
-                                logger.error(f"Failed to list collections: {response.get('error')}")
+                                logger.error(
+                                    f"Failed to list collections: {response.get('error')}"
+                                )
                                 all_available_collections = []
                             else:
-                                all_available_collections = [col.get('name', col) if isinstance(col, dict) else col 
-                                                            for col in response.get("collections", [])]
+                                all_available_collections = [
+                                    col.get("name", col)
+                                    if isinstance(col, dict)
+                                    else col
+                                    for col in response.get("collections", [])
+                                ]
                     else:
-                        logger.error("DraftService: rag_client has no list_collections attribute!")
+                        logger.error(
+                            "DraftService: rag_client has no list_collections attribute!"
+                        )
                         all_available_collections = []
 
                     collections_to_query: List[str] = []
                     if domain and self.rag_domains:
-                        logger.info(f"Attempting to use domain-based routing for domain: '{domain}'")
+                        logger.info(
+                            f"Attempting to use domain-based routing for domain: '{domain}'"
+                        )
                         domain_info = self.rag_domains.get(domain)
                         if domain_info:
                             domain_collections = domain_info.get("collections", [])
-                            collections_to_query = [c for c in domain_collections if c in all_available_collections]
+                            collections_to_query = [
+                                c
+                                for c in domain_collections
+                                if c in all_available_collections
+                            ]
                             if not collections_to_query:
-                                logger.warning(f"Domain '{domain}' specified, but none of its collections {domain_collections} exist. Falling back to default.")
+                                logger.warning(
+                                    f"Domain '{domain}' specified, but none of its collections {domain_collections} exist. Falling back to default."
+                                )
                         else:
-                            logger.warning(f"Domain '{domain}' not found in rag_domains.json. Falling back to default behavior.")
+                            logger.warning(
+                                f"Domain '{domain}' not found in rag_domains.json. Falling back to default behavior."
+                            )
 
                     if not collections_to_query:
-                        config_collections_str = self.config.get("DRAFT_RAG_COLLECTIONS", "").strip()
+                        config_collections_str = self.config.get(
+                            "DRAFT_RAG_COLLECTIONS", ""
+                        ).strip()
                         if config_collections_str:
-                            configured_list = [c.strip() for c in config_collections_str.split(",")]
-                            collections_to_query = [c for c in configured_list if c in all_available_collections]
+                            configured_list = [
+                                c.strip() for c in config_collections_str.split(",")
+                            ]
+                            collections_to_query = [
+                                c
+                                for c in configured_list
+                                if c in all_available_collections
+                            ]
                             if not collections_to_query:
-                                logger.warning(f"Configured collections {configured_list} not found. Using all available collections.")
+                                logger.warning(
+                                    f"Configured collections {configured_list} not found. Using all available collections."
+                                )
                                 collections_to_query = all_available_collections
                         else:
                             collections_to_query = all_available_collections
 
                     # -- FIAT STRATEGY: Always include Learning Pairs KB if it exists --
                     learning_kb = "learning_pairs_kb"
-                    if learning_kb in all_available_collections and learning_kb not in collections_to_query:
-                        logger.info(f"🖖 Fiat Strategie: Füge {learning_kb} zur RAG-Abfrage hinzu.")
+                    if (
+                        learning_kb in all_available_collections
+                        and learning_kb not in collections_to_query
+                    ):
+                        logger.info(
+                            f"🖖 Fiat Strategie: Füge {learning_kb} zur RAG-Abfrage hinzu."
+                        )
                         collections_to_query.append(learning_kb)
 
-                    logger.info(f"Final list of collections to be queried: {collections_to_query}")
+                    logger.info(
+                        f"Final list of collections to be queried: {collections_to_query}"
+                    )
 
                     if not collections_to_query:
                         logger.warning("No RAG collections found to query in ChromaDB")
                         rag_status = "no_collections"
                     else:
                         # Handle both local and external RAG services
-                        if hasattr(self.rag_client, 'query_service') and self.query_service:
+                        if (
+                            hasattr(self.rag_client, "query_service")
+                            and self.query_service
+                        ):
                             # Local RAGClient with QueryService
                             rag_response = await self.query_service.answer_query(
                                 query_text=query,
                                 collection_names=collections_to_query,
-                                final_k=10, # Use top 10 results for context
-                                system_prompt=None, # System prompt is handled by _build_prompt
-                                temperature=0.1 # Default temperature, can be made configurable
+                                final_k=10,  # Use top 10 results for context
+                                system_prompt=None,  # System prompt is handled by _build_prompt
+                                temperature=0.1,  # Default temperature, can be made configurable
                             )
                         else:
                             # External RAG connector - use its query method
                             rag_response = await self.rag_client.query(
                                 query_text=query,
                                 collection_names=collections_to_query,
-                                n_results=10
+                                n_results=10,
                             )
 
                         # Extract data from the standardized response
-                        if hasattr(self.rag_client, 'query_service') and self.query_service:
+                        if (
+                            hasattr(self.rag_client, "query_service")
+                            and self.query_service
+                        ):
                             # Local RAGClient response format
-                            rag_status = "success" if rag_response["metadata"]["success"] else "failed"
+                            rag_status = (
+                                "success"
+                                if rag_response["metadata"]["success"]
+                                else "failed"
+                            )
                             rag_error = rag_response["metadata"]["error"]
-                            rag_collection_count = len(rag_response["metadata"]["collections_queried"])
+                            rag_collection_count = len(
+                                rag_response["metadata"]["collections_queried"]
+                            )
                             rag_result_count = rag_response["metadata"]["final_k"]
                         else:
                             # External RAG connector response format
                             rag_status = rag_response["metadata"]["success"]
                             rag_error = rag_response["metadata"]["error"]
-                            rag_collection_count = len(collections_to_query)  # Approximation
+                            rag_collection_count = len(
+                                collections_to_query
+                            )  # Approximation
                             rag_result_count = rag_response["metadata"]["final_k"]
 
                         # -- FIAT STRATEGY: Graph-Lite Fact Injection --
                         from src.services.graph_lite_service import graph_lite
+
                         facts_context = graph_lite.get_context_for_rag(query)
                         if facts_context:
-                            logger.info("🖖 Fiat Strategie: Graph-Lite Fakten gefunden und injiziert.")
+                            logger.info(
+                                "🖖 Fiat Strategie: Graph-Lite Fakten gefunden und injiziert."
+                            )
 
                         if rag_response["context"] or facts_context:
                             context_parts = []
@@ -201,12 +266,17 @@ class DraftService:
                                 context_parts.append(facts_context)
 
                             # Handle both response formats
-                            if hasattr(self.rag_client, 'query_service') and self.query_service:
+                            if (
+                                hasattr(self.rag_client, "query_service")
+                                and self.query_service
+                            ):
                                 # Local RAGClient format
                                 for node in rag_response["context"]:
-                                    collection_tag = node.get('source_collection', 'UNKNOWN').upper()
-                                    relevance = node.get('relevance_score', 0)
-                                    content = node.get('content', '')
+                                    collection_tag = node.get(
+                                        "source_collection", "UNKNOWN"
+                                    ).upper()
+                                    relevance = node.get("relevance_score", 0)
+                                    content = node.get("content", "")
                                     context_parts.append(
                                         f"[{collection_tag} - Relevanz: {relevance:.2f}]\n{content}"
                                     )
@@ -216,13 +286,20 @@ class DraftService:
                                 # which might need transformation to match the expected format
                                 for item in rag_response["context"]:
                                     # Extract content and metadata from the external response
-                                    content = item.get('content', item.get('document', ''))
-                                    collection = item.get('collection_name', item.get('collection', 'UNKNOWN'))
-                                    relevance = item.get('relevance_score', item.get('relevance', 0))
+                                    content = item.get(
+                                        "content", item.get("document", "")
+                                    )
+                                    collection = item.get(
+                                        "collection_name",
+                                        item.get("collection", "UNKNOWN"),
+                                    )
+                                    relevance = item.get(
+                                        "relevance_score", item.get("relevance", 0)
+                                    )
                                     context_parts.append(
                                         f"[{collection.upper()} - Relevanz: {relevance:.2f}]\n{content}"
                                     )
-                            
+
                             rag_context = "\n\n---\n\n".join(context_parts)
                         else:
                             rag_context = ""
@@ -234,7 +311,9 @@ class DraftService:
                         )
 
                 except Exception as e:
-                    logger.error(f"RAG query failed in DraftService: {e}", exc_info=True)
+                    logger.error(
+                        f"RAG query failed in DraftService: {e}", exc_info=True
+                    )
                     rag_context = ""
                     rag_status = "failed"
                     rag_error = str(e)
@@ -246,11 +325,11 @@ class DraftService:
             prompt = self._build_prompt(email_data, rag_context)
             # Use LlamaIndex LLM interface instead of LangChain invoke
             try:
-                if hasattr(llm, 'complete'):
+                if hasattr(llm, "complete"):
                     response = llm.complete(prompt)
-                elif hasattr(llm, 'predict'):
+                elif hasattr(llm, "predict"):
                     response = llm.predict(prompt)
-                elif hasattr(llm, 'chat'):
+                elif hasattr(llm, "chat"):
                     response = llm.chat(prompt)
                 else:
                     response = llm(prompt)  # Direct call as fallback
@@ -264,29 +343,51 @@ class DraftService:
                 category = parts[1].strip() if len(parts) > 1 else "UNKNOWN"
                 logger.info(f"Email classified as NO_ANSWER_NEEDED: {category}")
                 return {
-                    "draft": "", "no_answer_needed": True, "reason_category": category,
-                    "reason_text": draft, "rag_context": rag_context,
-                    "model": getattr(llm, 'model_name', getattr(llm, 'model', 'unknown')),
-                    "rag_status": rag_status, "rag_error": rag_error,
-                    "rag_collection_count": rag_collection_count, "rag_result_count": rag_result_count
+                    "draft": "",
+                    "no_answer_needed": True,
+                    "reason_category": category,
+                    "reason_text": draft,
+                    "rag_context": rag_context,
+                    "model": getattr(
+                        llm, "model_name", getattr(llm, "model", "unknown")
+                    ),
+                    "rag_status": rag_status,
+                    "rag_error": rag_error,
+                    "rag_collection_count": rag_collection_count,
+                    "rag_result_count": rag_result_count,
                 }
 
             if draft.startswith("DRAFT |"):
                 draft = draft.replace("DRAFT |", "", 1).strip()
 
             result = {
-                "draft": draft, "no_answer_needed": False, "reason_category": None,
+                "draft": draft,
+                "no_answer_needed": False,
+                "reason_category": None,
                 "rag_context": rag_context,
-                "model": getattr(llm, 'model_name', getattr(llm, 'model', 'unknown')),
-                "rag_status": rag_status, "rag_error": rag_error,
-                "rag_collection_count": rag_collection_count, "rag_result_count": rag_result_count
+                "model": getattr(llm, "model_name", getattr(llm, "model", "unknown")),
+                "rag_status": rag_status,
+                "rag_error": rag_error,
+                "rag_collection_count": rag_collection_count,
+                "rag_result_count": rag_result_count,
             }
             logger.success(f"Draft generated (length: {len(draft)} chars)")
             return result
 
         except Exception as e:
             logger.error(f"Draft generation failed: {e}")
-            return {"error": str(e)}
+            return {
+                "error": str(e),
+                "draft": None,
+                "no_answer_needed": False,
+                "reason_category": None,
+                "rag_context": None,
+                "model": None,
+                "rag_status": "error",
+                "rag_error": str(e),
+                "rag_collection_count": 0,
+                "rag_result_count": 0,
+            }
 
     async def generate_draft_with_learning(
         self,
@@ -294,39 +395,56 @@ class DraftService:
         user_id: int,
         thread_id: str,
         use_rag: bool = True,
-        domain: Optional[str] = None
+        domain: Optional[str] = None,
     ) -> dict:
         """
         Generate draft and store in learning DB.
         """
         # Check if learning feature is available based on edition
         if not self._is_learning_enabled():
-            logger.info("Learning feature disabled for this edition, generating draft without learning")
-            return await self.generate_draft(email_data, user_id, use_rag=use_rag, domain=domain)
+            logger.info(
+                "Learning feature disabled for this edition, generating draft without learning"
+            )
+            return await self.generate_draft(
+                email_data, user_id, use_rag=use_rag, domain=domain
+            )
 
-        existing_pair = await self.learning_manager.get_pair_by_thread_id(thread_id, user_id)
+        existing_pair = await self.learning_manager.get_pair_by_thread_id(
+            thread_id, user_id
+        )
         if existing_pair:
-            logger.warning(f"Thread {thread_id} already has a draft (ID: {existing_pair.id}), returning existing draft")
+            logger.warning(
+                f"Thread {thread_id} already has a draft (ID: {existing_pair.id}), returning existing draft"
+            )
             return {
-                "draft": existing_pair.draft_content, "draft_id": existing_pair.id,
-                "already_existed": True, "status": existing_pair.status
+                "draft": existing_pair.draft_content,
+                "draft_id": existing_pair.id,
+                "already_existed": True,
+                "status": existing_pair.status,
             }
 
-        result = await self.generate_draft(email_data, user_id, use_rag=use_rag, domain=domain)
+        result = await self.generate_draft(
+            email_data, user_id, use_rag=use_rag, domain=domain
+        )
 
         if "error" in result or result.get("no_answer_needed"):
             return result
 
         draft_id = self.learning_manager.add_draft(
-            user_id=user_id, thread_id=thread_id,
-            draft_message_id=f"draft_{thread_id}_{user_id}", draft_content=result["draft"]
+            user_id=user_id,
+            thread_id=thread_id,
+            draft_message_id=f"draft_{thread_id}_{user_id}",
+            draft_content=result["draft"],
         )
         result["draft_id"] = draft_id
 
         if self.conversation_manager:
             conv_id = self.conversation_manager.store_conversation(
-                user_id=user_id, email_data=email_data, generated_response=result["draft"],
-                rag_context=result.get("rag_context", ""), model_used=result.get("model", "")
+                user_id=user_id,
+                email_data=email_data,
+                generated_response=result["draft"],
+                rag_context=result.get("rag_context", ""),
+                model_used=result.get("model", ""),
             )
             result["conversation_id"] = conv_id
 
@@ -337,13 +455,14 @@ class DraftService:
         Check if learning feature is enabled for the current edition.
         """
         from src.core.feature_limits import FeatureLimits
+
         return FeatureLimits.is_feature_enabled("learning_system", self.edition)
 
     def _build_prompt(self, email_data: dict, rag_context: str) -> str:
         """Build prompt for LLM with strong RAG context usage instructions"""
-        sender = email_data.get('sender', 'Unknown')
-        subject = email_data.get('subject', 'No Subject')
-        body = email_data.get('body', '')
+        sender = email_data.get("sender", "Unknown")
+        subject = email_data.get("subject", "No Subject")
+        body = email_data.get("body", "")
         email_lang = self._detect_language(subject + " " + body)
 
         prompt = f"""Du bist ein professioneller E-Mail-Assistent mit Zugriff auf eine Wissensdatenbank.
@@ -425,12 +544,53 @@ Antwort:"""
     def _detect_language(self, text: str) -> str:
         """Simple language detection (German vs English)"""
         text_lower = text.lower()
-        german_words = ['der', 'die', 'das', 'und', 'oder', 'ich', 'sie', 'haben', 'ist', 'sind',
-                       'für', 'mit', 'von', 'zu', 'auf', 'bei', 'über', 'unter', 'nach']
-        english_words = ['the', 'and', 'or', 'is', 'are', 'have', 'has', 'for', 'with', 'from',
-                        'about', 'this', 'that', 'your', 'our', 'can', 'will', 'would']
-        german_count = sum(1 for word in german_words if f' {word} ' in f' {text_lower} ')
-        english_count = sum(1 for word in english_words if f' {word} ' in f' {text_lower} ')
+        german_words = [
+            "der",
+            "die",
+            "das",
+            "und",
+            "oder",
+            "ich",
+            "sie",
+            "haben",
+            "ist",
+            "sind",
+            "für",
+            "mit",
+            "von",
+            "zu",
+            "auf",
+            "bei",
+            "über",
+            "unter",
+            "nach",
+        ]
+        english_words = [
+            "the",
+            "and",
+            "or",
+            "is",
+            "are",
+            "have",
+            "has",
+            "for",
+            "with",
+            "from",
+            "about",
+            "this",
+            "that",
+            "your",
+            "our",
+            "can",
+            "will",
+            "would",
+        ]
+        german_count = sum(
+            1 for word in german_words if f" {word} " in f" {text_lower} "
+        )
+        english_count = sum(
+            1 for word in english_words if f" {word} " in f" {text_lower} "
+        )
         if german_count > english_count:
             return "German"
         elif english_count > 0:
@@ -438,46 +598,75 @@ Antwort:"""
         else:
             return "Unknown (defaulting to English)"
 
-    async def filter_emails_batch(self, email_list: list, user_id: int, domain: Optional[str] = None) -> dict:
+    async def filter_emails_batch(
+        self, email_list: list, user_id: int, domain: Optional[str] = None
+    ) -> dict:
         """
         Filter multiple emails using LLM classification.
         """
         responses = []
         filtered_emails = []
         draft_needed_emails = []
-        
+
         for email in email_list:
             # Pass domain down to generate_draft for consistent routing
             result = await self.generate_draft(
-                {"sender": email.get("sender", ""), "subject": email.get("subject", ""), "body": email.get("body", "")}, 
-                user_id, 
+                {
+                    "sender": email.get("sender", ""),
+                    "subject": email.get("subject", ""),
+                    "body": email.get("body", ""),
+                },
+                user_id,
                 use_rag=True,
-                domain=domain
+                domain=domain,
             )
-            
+
             email_response = {
-                "id": email.get("id", ""), "email_id": email.get("id"),
-                "thread_id": email.get("thread_id"), "sender": email.get("sender"),
+                "id": email.get("id", ""),
+                "email_id": email.get("id"),
+                "thread_id": email.get("thread_id"),
+                "sender": email.get("sender"),
                 "subject": email.get("subject"),
-                "body": email.get("body", "")[:200] + "..." if len(email.get("body", "")) > 200 else email.get("body"),
+                "body": email.get("body", "")[:200] + "..."
+                if len(email.get("body", "")) > 200
+                else email.get("body"),
                 "rag_context_used": result.get("rag_context", ""),
-                "model": result.get("model", "")
+                "model": result.get("model", ""),
             }
 
-            if result.get("no_answer_needed") or result.get("reason_category") in ["NEWSLETTER", "NOTIFICATION"]:
-                email_response.update({"decision": "NO_RESPONSE_NEEDED", "reason_category": result.get("reason_category", "UNKNOWN"), "reason": result.get("reason_text", "")})
+            if result.get("no_answer_needed") or result.get("reason_category") in [
+                "NEWSLETTER",
+                "NOTIFICATION",
+            ]:
+                email_response.update(
+                    {
+                        "decision": "NO_RESPONSE_NEEDED",
+                        "reason_category": result.get("reason_category", "UNKNOWN"),
+                        "reason": result.get("reason_text", ""),
+                    }
+                )
                 filtered_emails.append(email_response)
-            elif result.get("reason_category") in ["INSUFFICIENT_CONTEXT", "OUT_OF_SCOPE"]:
-                email_response.update({"decision": "NO_REPLY_POSSIBLE", "reason_category": result.get("reason_category"), "reason": result.get("reason_text", "")})
+            elif result.get("reason_category") in [
+                "INSUFFICIENT_CONTEXT",
+                "OUT_OF_SCOPE",
+            ]:
+                email_response.update(
+                    {
+                        "decision": "NO_REPLY_POSSIBLE",
+                        "reason_category": result.get("reason_category"),
+                        "reason": result.get("reason_text", ""),
+                    }
+                )
                 filtered_emails.append(email_response)
             else:
-                email_response.update({"decision": "DRAFT_NEEDED", "reason_category": "DRAFT_NEEDED"})
+                email_response.update(
+                    {"decision": "DRAFT_NEEDED", "reason_category": "DRAFT_NEEDED"}
+                )
                 draft_needed_emails.append(email_response)
-        
+
         return {
             "responses": filtered_emails + draft_needed_emails,
             "filtered_emails": filtered_emails,
             "draft_needed_emails": draft_needed_emails,
-            "total_processed": len(email_list)
+            "total_processed": len(email_list),
         }
-

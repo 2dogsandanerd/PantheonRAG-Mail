@@ -148,7 +148,7 @@ class HealthChecker:
                     # Perform health checks in parallel
                     ollama_healthy, chroma_healthy = await asyncio.gather(
                         self.check_service("ollama", ollama_url, "/api/tags"),
-                        self.check_service("chroma", chroma_url, "/api/v2/heartbeat"),
+                        self.check_service("chroma", chroma_url, "/api/v1/heartbeat"),
                         return_exceptions=True
                     )
 

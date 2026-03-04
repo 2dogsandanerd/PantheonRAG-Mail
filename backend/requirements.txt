@@ -17,10 +17,12 @@ bcrypt==4.0.1
 slowapi>=0.1.9
 
 # AI & RAG
-llama-index>=0.11.0
-llama-index-core>=0.11.0
-llama-index-readers-file>=0.2.0
-llama-index-vector-stores-chroma>=0.2.0
+# Alle llama-index Pakete auf 0.11.x-Linie pinnen (konsistente Versionen)
+llama-index>=0.11.0,<0.12.0
+llama-index-core>=0.11.0,<0.12.0
+llama-index-readers-file>=0.2.0,<0.3.0
+llama-index-vector-stores-chroma>=0.2.0,<0.3.0
+llama-index-embeddings-ollama>=0.2.0,<0.3.0
 docling==2.5.2
 chromadb==0.5.15
 openai>=1.54.0

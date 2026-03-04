@@ -98,6 +98,8 @@ e2e_data/
 # Interne KI-Agenten Dateien (nicht fuer GitHub)
 QWEN.md
 GEMINI.md
+AI_RULES.md
+
 
 # Planungsordner (interne Entwicklungsdoku)
 planung/020626/

@@ -66,8 +66,13 @@ async def lifespan(app: FastAPI):
 
     # === SECURITY CHECK: JWT_SECRET_KEY ===
     import os as _os
+
     _jwt_secret = _os.getenv("JWT_SECRET_KEY", "")
-    if not _jwt_secret or _jwt_secret == "dev-secret-key-change-in-production" or _jwt_secret == "CHANGE_ME_generate_with_openssl_rand_-hex_32":
+    if (
+        not _jwt_secret
+        or _jwt_secret == "dev-secret-key-change-in-production"
+        or _jwt_secret == "CHANGE_ME_generate_with_openssl_rand_-hex_32"
+    ):
         logger.warning(
             "⚠️  SICHERHEITSWARNUNG: JWT_SECRET_KEY ist nicht gesetzt oder verwendet den unsicheren Standard-Wert!\n"
             "   Jeder kann damit beliebige Tokens erstellen und sich als jeder User ausgeben.\n"
@@ -152,6 +157,35 @@ async def lifespan(app: FastAPI):
         # Initialize database after services are up
         logger.info("Initializing database...")
         await init_db()  # Create database tables if they don't exist (async)
+
+        # Create default dev user if none exists (for DISABLE_AUTH mode)
+        import os as _os
+
+        _disable_auth = _os.getenv("DISABLE_AUTH", "false").lower() == "true"
+        if _disable_auth:
+            logger.info("DISABLE_AUTH=true - Creating default user if none exists...")
+            from src.database.database import AsyncSessionLocal
+            from src.database.models import User
+            from src.core.auth import get_password_hash
+            from sqlalchemy import select
+
+            async with AsyncSessionLocal() as db_session:
+                result = await db_session.execute(select(User).limit(1))
+                existing_user = result.scalar_one_or_none()
+                if not existing_user:
+                    dev_user = User(
+                        username=_os.getenv("DEV_USER", "dev"),
+                        email=_os.getenv("DEV_EMAIL", "dev@localhost"),
+                        hashed_password=get_password_hash(
+                            _os.getenv("DEV_PASSWORD", "dev123")
+                        ),
+                        is_active=True,
+                    )
+                    db_session.add(dev_user)
+                    await db_session.commit()
+                    logger.success(f"Created default user: {dev_user.username}")
+                else:
+                    logger.info(f"User already exists: {existing_user.username}")
 
         # Start Health Monitor for background service monitoring
         logger.info("Starting health monitor...")
